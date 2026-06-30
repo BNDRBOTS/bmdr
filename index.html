@@ -185,7 +185,8 @@
                 <h2 class="font-edge text-2xl font-bold text-black mb-2 leading-none uppercase">Mindful<br>Integration</h2>
                 <p class="text-black/70 text-sm font-medium mb-8">Gentle bilateral movement. Calming holistic frequencies. Seamless therapeutic space.</p>
                 
-                <a class="gumroad-button" href="https://gum.co/bemdr-access" data-gumroad-single-item="true" onclick="return Engine.handleAuth(event, this)">
+                <!-- Replace the href below with your exact Gumroad product link. Gumroad's native JS will handle the rest. -->
+                <a class="gumroad-button" href="https://bndrllc.gumroad.com/l/bemdr" data-gumroad-single-item="true">
                     <span>Unlock Full Practice</span>
                 </a>
                 
@@ -436,25 +437,6 @@
                     
                     audioBlock.classList.replace('opacity-30', 'opacity-100');
                 }
-            },
-
-            handleAuth(e, el) {
-                if (el.href.includes('bemdr-access')) {
-                    e.preventDefault();
-                    const span = el.querySelector('span');
-                    const originalText = span.innerText;
-                    
-                    span.innerHTML = '<span class="text-[#ff0055] drop-shadow-[0_0_10px_#ff0055]">LICENSE REQUIRED</span>';
-                    el.classList.add('animate-pulse');
-                    
-                    setTimeout(() => { 
-                        span.innerText = originalText; 
-                        el.classList.remove('animate-pulse');
-                    }, 2000);
-                    
-                    return false;
-                }
-                return true;
             },
 
             resize() {
