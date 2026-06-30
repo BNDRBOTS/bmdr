@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>BMDR | Mindful Reprocessing</title>
     
-    <!-- Professional-grade Loading: Preconnects -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
     
+    <!-- Mobile-First Configuration: Eradicates sticky hovers on touch devices -->
+    <script>
+        tailwind = {
+            config: {
+                future: {
+                    hoverOnlyWhenSupported: true,
+                }
+            }
+        }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.gumroad.com/2.0/js/gumroad.js" defer></script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
@@ -22,7 +31,6 @@
             --accent-glow: #00ffcc;
         }
 
-        /* Mobile First: Strict Viewport Locking */
         body, html {
             margin: 0;
             padding: 0;
@@ -36,7 +44,6 @@
             user-select: none; 
         }
 
-        /* Fixed positioning enforces exact viewport alignment between DOM and Canvas */
         .bg-split {
             position: fixed;
             inset: 0;
@@ -44,7 +51,6 @@
             z-index: 0;
         }
 
-        /* Heavy Glassmorphism */
         .glass-dark {
             background: var(--glass-black);
             backdrop-filter: var(--blur);
@@ -70,10 +76,8 @@
             }
         }
 
-        /* Typography */
         .font-edge { font-family: 'Syncopate', sans-serif; }
 
-        /* Canvas */
         #render-engine {
             position: fixed;
             inset: 0;
@@ -84,7 +88,6 @@
             touch-action: none;
         }
 
-        /* Touch-optimized Range Sliders */
         input[type=range] {
             -webkit-appearance: none;
             width: 100%;
@@ -113,18 +116,15 @@
             border-radius: 2px;
         }
 
-        /* Bottom Sheet Transition */
         #settings-sheet {
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sheet-closed { transform: translateY(100%); }
         .sheet-open { transform: translateY(0); }
 
-        /* Crisp layer transmissions */
         .hidden-layer { opacity: 0; pointer-events: none; z-index: -1; transition: opacity 0.15s ease-out; }
         .active-layer { opacity: 1; pointer-events: auto; z-index: 20; transition: opacity 0.15s ease-out; }
 
-        /* Kinetic Gumroad Button */
         .gumroad-button {
             display: inline-flex !important;
             align-items: center;
@@ -166,20 +166,14 @@
 </head>
 <body>
 
-    <!-- Base Background Layer -->
     <div class="bg-split"></div>
 
-    <!-- RENDERING ENGINE -->
     <canvas id="render-engine"></canvas>
 
-    <!-- LAYER 1: LANDING & AUTH -->
     <div id="layer-landing" class="fixed inset-0 flex flex-col justify-between p-6 active-layer">
-        <!-- Landing HUD: Absolute Alignment, Explicit Colors (No Fragile Blend Modes) -->
         <header class="relative w-full h-20 flex justify-between items-center z-30">
-            <!-- Left Hemisphere: Black Text over White Background -->
-            <h1 class="font-edge font-bold tracking-widest text-xl text-black">B-EMDR</h1>
+            <h1 class="font-edge font-bold tracking-widest text-xl text-black">BMDR</h1>
             
-            <!-- Right Hemisphere: White Graphic over Black Background -->
             <a href="http://bndrllc.com" target="_blank" rel="noopener noreferrer" class="opacity-60 hover:opacity-100 transition-all duration-300">
                 <img src="https://r2-uploader-production.up.railway.app/files/6a9dd45e-e7a0-4396-a084-5f11b737e92e.png" alt="BNDR LLC" class="h-5 w-auto object-contain filter brightness-0 invert">
             </a>
@@ -191,19 +185,16 @@
                 <h2 class="font-edge text-2xl font-bold text-black mb-2 leading-none uppercase">Mindful<br>Integration</h2>
                 <p class="text-black/70 text-sm font-medium mb-8">Gentle bilateral movement. Calming holistic frequencies. Seamless therapeutic space.</p>
                 
-                <!-- GUMROAD INTEGRATION -->
-                <a class="gumroad-button" href="https://gum.co/YOUR_PRODUCT_ID" data-gumroad-single-item="true" onclick="return Engine.handleAuth(event, this)">
+                <a class="gumroad-button" href="https://gum.co/bemdr-access" data-gumroad-single-item="true" onclick="return Engine.handleAuth(event, this)">
                     <span>Unlock Full Practice</span>
                 </a>
                 
-                <!-- Fallback / Bypass -->
-                <button onclick="Engine.mountWorkspace()" class="w-full mt-4 py-4 text-xs font-bold text-black/40 hover:text-black uppercase tracking-widest transition-colors">
+                <button onclick="Engine.mountWorkspace()" class="w-full mt-4 py-4 text-xs font-bold text-black/40 hover:text-black active:text-black active:opacity-70 uppercase tracking-widest transition-colors">
                     Begin Personal Practice
                 </button>
             </div>
         </main>
 
-        <!-- Right-Hemisphere Constrained Footer -->
         <footer class="w-full flex justify-end pb-6 z-20">
             <div class="w-1/2 text-right pr-2 sm:pr-4 text-white/50 text-[10px] font-edge tracking-[0.2em] uppercase">
                 &copy; 2026 BNDR LLC // BEMDR
@@ -211,35 +202,34 @@
         </footer>
     </div>
 
-    <!-- LAYER 2: WORKSPACE UI -->
     <div id="layer-workspace" class="fixed inset-0 flex flex-col justify-end hidden-layer">
         
-        <!-- Fullscreen tap target: Replaces laggy scale effect for zero-friction pausing -->
         <div class="absolute inset-0 z-20 cursor-pointer" onclick="Engine.toggleSystem()"></div>
 
-        <!-- Workspace HUD: Absolute Alignment, Explicit Colors -->
-        <div class="absolute top-0 left-0 w-full px-6 h-24 flex justify-between items-center z-30 pointer-events-none">
+        <!-- Surgically Enforced Mathematical Alignment: Grid Structure replaces fragile absolute transforms -->
+        <div class="absolute top-0 left-0 w-full px-6 h-24 grid grid-cols-3 items-center z-30 pointer-events-none">
             
-            <!-- Left Hemisphere: Exit Button. Hardcoded Black over White Background -->
-            <button onclick="Engine.unmountWorkspace()" class="p-3 -ml-3 opacity-50 hover:opacity-100 transition-opacity text-black pointer-events-auto">
-                <i data-lucide="arrow-left" class="w-6 h-6"></i>
-            </button>
-            
-            <!-- Center Sphere: Status. Glass pill guarantees visibility over the 50/50 split line -->
-            <div id="status-container" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 glass-dark px-4 py-1.5 rounded-full border border-white/10 pointer-events-auto">
-                <div id="status-text" class="whitespace-nowrap font-edge text-[10px] tracking-[0.3em] uppercase animate-pulse text-white">Stillness</div>
+            <div class="flex justify-start">
+                <button onclick="Engine.unmountWorkspace()" class="p-3 -ml-3 opacity-50 hover:opacity-100 active:opacity-100 active:scale-95 transition-all text-black pointer-events-auto">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </button>
             </div>
             
-            <!-- Right Hemisphere: Audio Toggle. Hardcoded White over Black Background -->
-            <button onclick="Engine.toggleAudio()" class="p-3 -mr-3 opacity-50 hover:opacity-100 transition-opacity text-white pointer-events-auto">
-                <i data-lucide="volume-x" id="icon-audio-off" class="w-6 h-6"></i>
-                <i data-lucide="volume-2" id="icon-audio-on" class="w-6 h-6 hidden"></i>
-            </button>
+            <div class="flex justify-center">
+                <div id="status-container" class="glass-dark px-4 py-1.5 rounded-full border border-white/10 pointer-events-auto flex items-center justify-center">
+                    <span id="status-text" class="whitespace-nowrap font-edge text-[10px] leading-none tracking-[0.3em] uppercase animate-pulse text-white mt-[1px]">Stillness</span>
+                </div>
+            </div>
+            
+            <div class="flex justify-end">
+                <button id="btn-audio-hud" onclick="Engine.toggleAudio()" class="p-3 -mr-3 opacity-50 hover:opacity-100 active:opacity-100 active:scale-95 transition-all duration-300 ease-out text-white pointer-events-auto flex items-center justify-center">
+                    <i data-lucide="volume-x" id="icon-audio-off" class="w-5 h-5"></i>
+                    <i data-lucide="volume-2" id="icon-audio-on" class="w-5 h-5 hidden"></i>
+                </button>
+            </div>
 
         </div>
 
-        <!-- Floating Action Button (Play/Pause) -->
-        <!-- Fixed mathematical center alignment to exact canvas bounds -->
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 flex items-center justify-center pointer-events-none">
             <button id="btn-master-play" onclick="Engine.toggleSystem()" class="w-20 h-20 rounded-full border border-white/10 glass-dark flex items-center justify-center transition-all duration-200 active:scale-90 shadow-[0_0_40px_rgba(0,0,0,0.6)] group hover:border-white/30 pointer-events-auto">
                 <i data-lucide="play" id="icon-play" class="w-8 h-8 ml-1 text-white opacity-80 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"></i>
@@ -247,27 +237,25 @@
             </button>
         </div>
 
-        <!-- Mobile Bottom Sheet trigger -->
         <div class="w-full px-4 pb-8 z-30 flex justify-center pointer-events-none">
             <button onclick="Engine.toggleSheet()" class="glass-dark px-8 py-4 rounded-full text-white font-edge text-xs tracking-widest uppercase flex items-center gap-3 active:scale-95 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-transform pointer-events-auto">
                 <i data-lucide="sliders" class="w-4 h-4"></i> Session Adjustments
             </button>
         </div>
 
-        <!-- The Bottom Sheet (Therapeutic Settings) -->
-        <div id="settings-sheet" class="absolute bottom-0 left-0 w-full h-[75vh] glass-dark rounded-t-[40px] z-40 flex flex-col sheet-closed border-t border-white/10">
-            <!-- Drag Handle area -->
+        <!-- Mobile-First h-[75dvh] enforces exact dynamic viewport height anchoring, preventing breakage by browser toolbars -->
+        <div id="settings-sheet" class="absolute bottom-0 left-0 w-full h-[75dvh] glass-dark rounded-t-[40px] z-40 flex flex-col sheet-closed border-t border-white/10">
             <div class="w-full p-4 flex justify-center items-center cursor-pointer" onclick="Engine.toggleSheet()">
                 <div class="w-16 h-1.5 bg-white/20 rounded-full"></div>
             </div>
             
-            <div class="flex-grow overflow-y-auto px-8 pb-12 space-y-8">
+            <!-- overscroll-contain enforces mathematical scroll trapping. Background will not bleed/rubber-band -->
+            <div class="flex-grow overflow-y-auto overscroll-contain px-8 pb-12 space-y-8">
                 <div class="flex justify-between items-end mb-8">
                     <h3 class="font-edge text-white text-xl">Session Space</h3>
-                    <button onclick="Engine.toggleSheet()" class="text-white/50 p-2"><i data-lucide="x" class="w-6 h-6"></i></button>
+                    <button onclick="Engine.toggleSheet()" class="text-white/50 p-2 active:text-white transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
                 </div>
 
-                <!-- Frequency -->
                 <div class="space-y-4">
                     <div class="flex justify-between text-white/70 font-edge text-xs tracking-widest">
                         <span>Visual Pace</span>
@@ -276,7 +264,6 @@
                     <input type="range" id="param-hz" min="0.2" max="3.0" step="0.1" value="1.2">
                 </div>
 
-                <!-- Rhythm Link Toggle -->
                 <div class="flex justify-between items-center py-2">
                     <div>
                         <div class="font-edge text-white text-[11px] tracking-widest">Link Rhythms</div>
@@ -287,7 +274,6 @@
                     </button>
                 </div>
 
-                <!-- Audio Rhythm Slider -->
                 <div id="audio-rhythm-control" class="space-y-4 opacity-30 transition-opacity duration-300">
                     <div class="flex justify-between text-white/70 font-edge text-xs tracking-widest">
                         <span>Audio Pace</span>
@@ -296,7 +282,6 @@
                     <input type="range" id="param-audio-hz" min="0.2" max="3.0" step="0.1" value="1.2">
                 </div>
 
-                <!-- Amplitude / Size -->
                 <div class="space-y-4">
                     <div class="flex justify-between text-white/70 font-edge text-xs tracking-widest">
                         <span>Visual Anchor Size</span>
@@ -305,23 +290,21 @@
                     <input type="range" id="param-mass" min="20" max="150" step="5" value="60">
                 </div>
 
-                <!-- Trajectory -->
                 <div class="space-y-4">
                     <div class="text-white/70 font-edge text-xs tracking-widest mb-2">Flow Pattern</div>
                     <div class="grid grid-cols-2 gap-4">
-                        <button onclick="Engine.setPath('linear')" id="path-linear" class="py-4 rounded-2xl bg-white text-black font-edge text-[10px] font-bold uppercase transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)]">Gentle Sway</button>
-                        <button onclick="Engine.setPath('lissajous')" id="path-lissajous" class="py-4 rounded-2xl bg-white/10 text-white font-edge text-[10px] font-bold uppercase transition-all">Infinite Flow</button>
+                        <button onclick="Engine.setPath('linear')" id="path-linear" class="py-4 rounded-2xl bg-white text-black font-edge text-[10px] font-bold uppercase transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95">Gentle Sway</button>
+                        <button onclick="Engine.setPath('lissajous')" id="path-lissajous" class="py-4 rounded-2xl bg-white/10 text-white font-edge text-[10px] font-bold uppercase transition-all active:scale-95">Infinite Flow</button>
                     </div>
                 </div>
 
-                <!-- Color Chromatics -->
                 <div class="space-y-4">
                     <div class="text-white/70 font-edge text-xs tracking-widest mb-2">Soothing Palette</div>
                     <div class="flex gap-4">
-                        <button onclick="Engine.setColor('#00ffcc')" class="w-14 h-14 rounded-full bg-[#00ffcc] border-4 border-black shadow-[0_0_20px_#00ffcc] active-color transition-transform"></button>
-                        <button onclick="Engine.setColor('#ff0055')" class="w-14 h-14 rounded-full bg-[#ff0055] border-4 border-transparent opacity-50 transition-transform"></button>
-                        <button onclick="Engine.setColor('#7000ff')" class="w-14 h-14 rounded-full bg-[#7000ff] border-4 border-transparent opacity-50 transition-transform"></button>
-                        <button onclick="Engine.setColor('#ffffff')" class="w-14 h-14 rounded-full bg-[#ffffff] border-4 border-transparent opacity-50 transition-transform"></button>
+                        <button onclick="Engine.setColor('#00ffcc')" class="w-14 h-14 rounded-full bg-[#00ffcc] border-4 border-black shadow-[0_0_20px_#00ffcc] active-color transition-transform active:scale-90"></button>
+                        <button onclick="Engine.setColor('#ff0055')" class="w-14 h-14 rounded-full bg-[#ff0055] border-4 border-transparent opacity-50 transition-transform active:scale-90"></button>
+                        <button onclick="Engine.setColor('#7000ff')" class="w-14 h-14 rounded-full bg-[#7000ff] border-4 border-transparent opacity-50 transition-transform active:scale-90"></button>
+                        <button onclick="Engine.setColor('#ffffff')" class="w-14 h-14 rounded-full bg-[#ffffff] border-4 border-transparent opacity-50 transition-transform active:scale-90"></button>
                     </div>
                 </div>
             </div>
@@ -329,21 +312,16 @@
     </div>
 
     <script>
-        // Init Lucide when DOM resolves
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) lucide.createIcons();
             Engine.init();
         });
 
-        /**
-         * LATTICE ENGINE
-         * Zero Tolerance for Intent Decay.
-         */
         const Engine = {
             sys: {
                 active: false,
                 sheetOpen: false,
-                audioEnabled: false, // Default to false for zero friction
+                audioEnabled: false, 
                 syncRates: true, 
                 mode: 'idle'
             },
@@ -377,18 +355,31 @@
 
             init() {
                 this.gfx.canvas = document.getElementById('render-engine');
+                if (!this.gfx.canvas) return;
+                
                 this.gfx.ctx = this.gfx.canvas.getContext('2d', { alpha: true });
+                if (!this.gfx.ctx) return;
+                
                 window.addEventListener('resize', () => this.resize());
                 this.resize();
                 this.bindUI();
                 
-                // Set initial UI state for audio
+                const btnHud = document.getElementById('btn-audio-hud');
                 if (this.sys.audioEnabled) {
                     document.getElementById('icon-audio-off').classList.add('hidden');
                     document.getElementById('icon-audio-on').classList.remove('hidden');
+                    if (btnHud) {
+                        btnHud.classList.remove('opacity-50', 'text-white');
+                        btnHud.style.color = this.params.color;
+                        btnHud.style.filter = `drop-shadow(0 0 8px ${this.params.color})`;
+                        btnHud.style.transform = 'scale(1.1)';
+                    }
                 } else {
                     document.getElementById('icon-audio-off').classList.remove('hidden');
                     document.getElementById('icon-audio-on').classList.add('hidden');
+                    if (btnHud) {
+                        btnHud.classList.add('opacity-50', 'text-white');
+                    }
                 }
             },
 
@@ -448,12 +439,12 @@
             },
 
             handleAuth(e, el) {
-                if (el.href.includes('YOUR_PRODUCT_ID')) {
+                if (el.href.includes('bemdr-access')) {
                     e.preventDefault();
                     const span = el.querySelector('span');
                     const originalText = span.innerText;
                     
-                    span.innerHTML = '<span class="text-[#ff0055] drop-shadow-[0_0_10px_#ff0055]">ID REQUIRED</span>';
+                    span.innerHTML = '<span class="text-[#ff0055] drop-shadow-[0_0_10px_#ff0055]">LICENSE REQUIRED</span>';
                     el.classList.add('animate-pulse');
                     
                     setTimeout(() => { 
@@ -481,7 +472,6 @@
                 document.getElementById('layer-workspace').classList.replace('hidden-layer', 'active-layer');
                 this.sys.mode = 'workspace';
                 
-                // Zero friction logic: Start flowing immediately upon entry
                 if (!this.sys.active) {
                     this.toggleSystem(true);
                 } else {
@@ -511,11 +501,11 @@
                 const l = document.getElementById('path-linear');
                 const i = document.getElementById('path-lissajous');
                 l.className = type === 'linear' 
-                    ? 'py-4 rounded-2xl bg-white text-black font-edge text-[10px] font-bold uppercase transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)]' 
-                    : 'py-4 rounded-2xl bg-white/10 text-white font-edge text-[10px] font-bold uppercase transition-all hover:bg-white/20';
+                    ? 'py-4 rounded-2xl bg-white text-black font-edge text-[10px] font-bold uppercase transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95' 
+                    : 'py-4 rounded-2xl bg-white/10 text-white font-edge text-[10px] font-bold uppercase transition-all hover:bg-white/20 active:scale-95';
                 i.className = type === 'lissajous' 
-                    ? 'py-4 rounded-2xl bg-white text-black font-edge text-[10px] font-bold uppercase transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)]' 
-                    : 'py-4 rounded-2xl bg-white/10 text-white font-edge text-[10px] font-bold uppercase transition-all hover:bg-white/20';
+                    ? 'py-4 rounded-2xl bg-white text-black font-edge text-[10px] font-bold uppercase transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95' 
+                    : 'py-4 rounded-2xl bg-white/10 text-white font-edge text-[10px] font-bold uppercase transition-all hover:bg-white/20 active:scale-95';
                 if (!this.sys.active) this.render();
             },
 
@@ -532,11 +522,19 @@
                     }
                 });
                 
-                // Update active status text color if flowing
                 if (this.sys.active) {
                     const statusText = document.getElementById('status-text');
                     statusText.style.color = this.params.color;
                     statusText.style.textShadow = `0 0 10px ${this.params.color}`;
+                }
+                
+                // Keep HUD audio button color synchronized if audio is enabled
+                if (this.sys.audioEnabled) {
+                    const btnHud = document.getElementById('btn-audio-hud');
+                    if (btnHud) {
+                        btnHud.style.color = hex;
+                        btnHud.style.filter = `drop-shadow(0 0 8px ${hex})`;
+                    }
                 }
                 
                 if (!this.sys.active) this.render();
@@ -553,7 +551,6 @@
                     iPlay.classList.add('hidden');
                     iPause.classList.remove('hidden');
                     
-                    // Dim UI for therapeutic focus without DOM scale distortions
                     btn.classList.add('opacity-10'); 
                     setTimeout(() => { if(this.sys.active) btn.classList.replace('opacity-10', 'opacity-0'); }, 1000); 
                     
@@ -572,7 +569,6 @@
                     iPlay.classList.remove('hidden');
                     iPause.classList.add('hidden');
                     
-                    // Restore UI gracefully
                     btn.classList.remove('opacity-0', 'opacity-10');
                     
                     status.innerText = "Stillness";
@@ -582,10 +578,14 @@
 
                     if (this.gfx.req) cancelAnimationFrame(this.gfx.req);
                     
-                    if (this.audio.ready && this.audio.masterGain) {
-                        this.audio.masterGain.gain.cancelScheduledValues(this.audio.ctx.currentTime);
-                        this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, this.audio.ctx.currentTime);
-                        this.audio.masterGain.gain.linearRampToValueAtTime(0, this.audio.ctx.currentTime + 0.3);
+                    if (this.audio.ready && this.audio.masterGain && this.audio.ctx) {
+                        try {
+                            this.audio.masterGain.gain.cancelScheduledValues(this.audio.ctx.currentTime);
+                            this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, this.audio.ctx.currentTime);
+                            this.audio.masterGain.gain.linearRampToValueAtTime(0, this.audio.ctx.currentTime + 0.3);
+                        } catch (e) {
+                            
+                        }
                     }
                 }
             },
@@ -594,108 +594,152 @@
                 this.sys.audioEnabled = !this.sys.audioEnabled;
                 const iconOff = document.getElementById('icon-audio-off');
                 const iconOn = document.getElementById('icon-audio-on');
+                const btnHud = document.getElementById('btn-audio-hud');
                 
                 if (this.sys.audioEnabled) {
                     iconOff.classList.add('hidden');
                     iconOn.classList.remove('hidden');
+                    
+                    if (btnHud) {
+                        btnHud.classList.remove('opacity-50', 'text-white');
+                        btnHud.style.color = this.params.color;
+                        btnHud.style.filter = `drop-shadow(0 0 8px ${this.params.color})`;
+                        btnHud.style.transform = 'scale(1.1)';
+                    }
                     
                     if (this.sys.active) this.igniteAudio();
                 } else {
                     iconOff.classList.remove('hidden');
                     iconOn.classList.add('hidden');
                     
-                    if (this.audio.ready) {
-                        this.audio.masterGain.gain.cancelScheduledValues(this.audio.ctx.currentTime);
-                        this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, this.audio.ctx.currentTime);
-                        this.audio.masterGain.gain.linearRampToValueAtTime(0, this.audio.ctx.currentTime + 0.1);
+                    if (btnHud) {
+                        btnHud.classList.add('opacity-50', 'text-white');
+                        btnHud.style.color = '';
+                        btnHud.style.filter = '';
+                        btnHud.style.transform = 'scale(1)';
+                    }
+                    
+                    if (this.audio.ready && this.audio.masterGain && this.audio.ctx) {
+                        try {
+                            this.audio.masterGain.gain.cancelScheduledValues(this.audio.ctx.currentTime);
+                            this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, this.audio.ctx.currentTime);
+                            this.audio.masterGain.gain.linearRampToValueAtTime(0, this.audio.ctx.currentTime + 0.1);
+                        } catch (e) {
+                            
+                        }
                     }
                 }
             },
 
             igniteAudio() {
                 if (!this.audio.ctx) {
-                    const ACtx = window.AudioContext || window.webkitAudioContext;
-                    this.audio.ctx = new ACtx();
-                    
-                    this.audio.compressor = this.audio.ctx.createDynamicsCompressor();
-                    this.audio.compressor.threshold.value = -24;
-                    this.audio.compressor.knee.value = 10;
-                    this.audio.compressor.ratio.value = 12;
-                    this.audio.compressor.attack.value = 0.003;
-                    this.audio.compressor.release.value = 0.25;
+                    try {
+                        const ACtx = window.AudioContext || window.webkitAudioContext;
+                        if (!ACtx) throw new Error('AudioContext not supported');
+                        
+                        this.audio.ctx = new ACtx();
+                        
+                        this.audio.compressor = this.audio.ctx.createDynamicsCompressor();
+                        this.audio.compressor.threshold.value = -24;
+                        this.audio.compressor.knee.value = 10;
+                        this.audio.compressor.ratio.value = 12;
+                        this.audio.compressor.attack.value = 0.003;
+                        this.audio.compressor.release.value = 0.25;
 
-                    this.audio.masterGain = this.audio.ctx.createGain();
-                    this.audio.masterGain.gain.value = 0;
+                        this.audio.masterGain = this.audio.ctx.createGain();
+                        this.audio.masterGain.gain.value = 0;
 
-                    this.audio.compressor.connect(this.audio.masterGain);
-                    this.audio.masterGain.connect(this.audio.ctx.destination);
+                        this.audio.compressor.connect(this.audio.masterGain);
+                        this.audio.masterGain.connect(this.audio.ctx.destination);
 
-                    // Central Mix Bus
-                    const coreMix = this.audio.ctx.createGain();
-                    coreMix.gain.value = 0.8;
+                        const coreMix = this.audio.ctx.createGain();
+                        coreMix.gain.value = 0.8;
 
-                    // Deep Sub (43.5Hz)
-                    const sub = this.audio.ctx.createOscillator();
-                    sub.type = 'triangle'; 
-                    sub.frequency.value = this.audio.baseFreq / 2;
-                    sub.connect(coreMix);
-                    sub.start();
+                        const sub = this.audio.ctx.createOscillator();
+                        sub.type = 'triangle'; 
+                        sub.frequency.value = this.audio.baseFreq / 2;
+                        sub.connect(coreMix);
+                        sub.start();
 
-                    // Grounding Harmonic (174Hz)
-                    const harm = this.audio.ctx.createOscillator();
-                    harm.type = 'sine';
-                    harm.frequency.value = this.audio.baseFreq * 2; 
-                    const harmGain = this.audio.ctx.createGain();
-                    harmGain.gain.value = 0.4;
-                    harm.connect(harmGain);
-                    harmGain.connect(coreMix);
-                    harm.start();
+                        const harm = this.audio.ctx.createOscillator();
+                        harm.type = 'sine';
+                        harm.frequency.value = this.audio.baseFreq * 2; 
+                        const harmGain = this.audio.ctx.createGain();
+                        harmGain.gain.value = 0.4;
+                        harm.connect(harmGain);
+                        harmGain.connect(coreMix);
+                        harm.start();
 
-                    // Perfect hardware-level channel isolation
-                    this.audio.merger = this.audio.ctx.createChannelMerger(2);
-                    this.audio.gainL = this.audio.ctx.createGain();
-                    this.audio.gainR = this.audio.ctx.createGain();
+                        this.audio.merger = this.audio.ctx.createChannelMerger(2);
+                        this.audio.gainL = this.audio.ctx.createGain();
+                        this.audio.gainR = this.audio.ctx.createGain();
 
-                    coreMix.connect(this.audio.gainL);
-                    coreMix.connect(this.audio.gainR);
+                        coreMix.connect(this.audio.gainL);
+                        coreMix.connect(this.audio.gainR);
 
-                    this.audio.gainL.connect(this.audio.merger, 0, 0); // Hard route to Left
-                    this.audio.gainR.connect(this.audio.merger, 0, 1); // Hard route to Right
-                    
-                    this.audio.merger.connect(this.audio.compressor);
+                        this.audio.gainL.connect(this.audio.merger, 0, 0);
+                        this.audio.gainR.connect(this.audio.merger, 0, 1);
+                        
+                        this.audio.merger.connect(this.audio.compressor);
 
-                    this.audio.ready = true;
+                        this.audio.ready = true;
+                    } catch (e) {
+                        this.sys.audioEnabled = false;
+                        this.audio.ready = false;
+                        
+                        const iconOff = document.getElementById('icon-audio-off');
+                        const iconOn = document.getElementById('icon-audio-on');
+                        const btnHud = document.getElementById('btn-audio-hud');
+                        
+                        if (iconOff && iconOn) {
+                            iconOff.classList.remove('hidden');
+                            iconOn.classList.add('hidden');
+                        }
+                        
+                        if (btnHud) {
+                            btnHud.classList.add('opacity-50', 'text-white');
+                            btnHud.style.color = '';
+                            btnHud.style.filter = '';
+                            btnHud.style.transform = 'scale(1)';
+                        }
+                        return;
+                    }
                 }
 
                 if (this.audio.ctx.state === 'suspended') {
                     this.audio.ctx.resume();
                 }
 
-                this.audio.masterGain.gain.cancelScheduledValues(this.audio.ctx.currentTime);
-                this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, this.audio.ctx.currentTime);
-                this.audio.masterGain.gain.linearRampToValueAtTime(1.0, this.audio.ctx.currentTime + 1.5);
+                try {
+                    this.audio.masterGain.gain.cancelScheduledValues(this.audio.ctx.currentTime);
+                    this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, this.audio.ctx.currentTime);
+                    this.audio.masterGain.gain.linearRampToValueAtTime(1.0, this.audio.ctx.currentTime + 1.5);
+                } catch (e) {
+                    
+                }
             },
 
             modulateAudio() {
-                if (!this.audio.ready || !this.sys.audioEnabled) return;
+                if (!this.audio.ready || !this.sys.audioEnabled || !this.audio.ctx) return;
                 
-                const now = this.audio.ctx.currentTime;
-                
-                // Pure mathematically decoupled rhythm
-                let audioPanNorm = 0;
-                if (this.sys.syncRates) {
-                    audioPanNorm = this.gfx.xNorm; 
-                } else {
-                    audioPanNorm = Math.sin(this.params.audioTime);
-                }
-                
-                // Crossfade matrix for absolute L/R isolation (0.0 to 1.0 curve)
-                const volL = Math.max(0, 0.5 - (audioPanNorm * 0.5));
-                const volR = Math.max(0, 0.5 + (audioPanNorm * 0.5));
+                try {
+                    const now = this.audio.ctx.currentTime;
+                    
+                    let audioPanNorm = 0;
+                    if (this.sys.syncRates) {
+                        audioPanNorm = this.gfx.xNorm; 
+                    } else {
+                        audioPanNorm = Math.sin(this.params.audioTime);
+                    }
+                    
+                    const volL = Math.max(0, 0.5 - (audioPanNorm * 0.5));
+                    const volR = Math.max(0, 0.5 + (audioPanNorm * 0.5));
 
-                // Direct synchronous parameter assignment eliminates lag filter entirely
-                this.audio.gainL.gain.setValueAtTime(volL, now);
-                this.audio.gainR.gain.setValueAtTime(volR, now);
+                    this.audio.gainL.gain.setValueAtTime(volL, now);
+                    this.audio.gainR.gain.setValueAtTime(volR, now);
+                } catch (e) {
+                    
+                }
             },
 
             loop() {
@@ -704,7 +748,6 @@
                 const dt = (now - this.lastTime) / 1000;
                 this.lastTime = now;
 
-                // Time Accumulation Logic
                 this.params.time += dt * this.params.hz * Math.PI;
                 if (this.sys.syncRates) {
                     this.params.audioTime = this.params.time; 
@@ -720,6 +763,8 @@
 
             render() {
                 const { ctx, w, h } = this.gfx;
+                if (!ctx) return;
+                
                 ctx.clearRect(0, 0, w, h);
 
                 const cy = h / 2;
