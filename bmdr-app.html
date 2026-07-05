@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+​
+    <title>BMDR | Mindful Practice Space</title>
+    <meta name="title" content="BMDR | Mindful Practice Space">
+    <meta name="description" content="BMDR is a quiet practice space for self-guided bilateral stimulation. A point of light sways left to right at your pace, with a low tone built around an 87 Hz core that travels with it. One file — no account, no tracking, works offline.">
+    <meta name="author" content="BNDR LLC">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#e8e8e8" media="(prefers-color-scheme: light)">
+    <meta name="color-scheme" content="dark light">
+    <meta name="application-name" content="BMDR">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BMDR">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="canonical" href="https://bndrllc.com/bmdr">
+​
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bndrllc.com/bmdr">
+    <meta property="og:title" content="BMDR | Mindful Practice Space">
+    <meta property="og:description" content="A quiet practice space for self-guided bilateral stimulation. A point of light sways at your pace, with a low tone that travels with it. One file — no account, no tracking, works offline.">
+    <meta property="og:image" content="https://r2-uploader-production.up.railway.app/files/6a9dd45e-e7a0-4396-a084-5f11b737e92e.png">
+    <meta property="og:image:alt" content="BMDR bilateral stimulation practice space interface">
+    <meta property="og:site_name" content="BNDR LLC">
+​
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bndrllc.com/bmdr">
+    <meta property="twitter:title" content="BMDR | Mindful Practice Space">
+    <meta property="twitter:description" content="A quiet practice space for self-guided bilateral stimulation. One file — no account, no tracking, works offline.">
+    <meta property="twitter:image" content="https://r2-uploader-production.up.railway.app/files/6a9dd45e-e7a0-4396-a084-5f11b737e92e.png">
+    <meta property="twitter:image:alt" content="BMDR bilateral stimulation practice space interface">
+​
+    <!-- No external requests: the app uses system fonts and runs fully offline. -->
+​
+    <style>
+        :root {
+            --glass-black: rgba(0, 0, 0, 0.75);
+            --glass-white: rgba(255, 255, 255, 0.75);
+            --blur: blur(24px);
+            --accent-glow: #00ffcc;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-left: env(safe-area-inset-left, 0px);
+            --safe-right: env(safe-area-inset-right, 0px);
+        }
+​
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            overscroll-behavior: none;
+            font-family: 'Inter', -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            -webkit-tap-highlight-color: transparent;
+        }
+​
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            box-sizing: border-box;
+        }
+​
+        [contenteditable], input, textarea, [role="textbox"] { user-select: text; }
+​
+        *, *::before, *::after { box-sizing: border-box; }
+​
+        button { font: inherit; background: none; border: 0; cursor: pointer; color: inherit; padding: 0; }
+        a { color: inherit; text-decoration: none; }
+        svg { display: block; }
+​
+        .font-edge { font-family: 'Syncopate', 'Verdana', 'DejaVu Sans', sans-serif; }
+​
+        .bg-split {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(105deg, #e8e8e8 0%, #e8e8e8 50%, #000000 50%, #000000 100%);
+            z-index: 0;
+        }
+​
+        .glass-dark {
+            background: var(--glass-black);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        }
+​
+        .glass-light {
+            background: var(--glass-white);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+        }
+​
+        @media (hover: hover) {
+            .glass-light:hover {
+                box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+                transform: translateY(-4px);
+            }
+        }
+​
+        #render-engine {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+            touch-action: none;
+        }
+​
+        /* ---------- shared utility states (toggled by the engine) ---------- */
+        .hidden { display: none !important; }
+        .opacity-0 { opacity: 0 !important; }
+        .opacity-10 { opacity: .1 !important; }
+        .opacity-50 { opacity: .5; }
+        .text-white { color: #fff; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+​
+        /* ---------- range inputs ---------- */
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            background: transparent;
+            height: 44px;
+            margin: 0;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 20px var(--accent-glow);
+            cursor: pointer;
+            margin-top: -10px;
+            transition: transform 0.2s ease;
+        }
+        input[type=range]::-moz-range-thumb {
+            height: 24px;
+            width: 24px;
+            border: none;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 20px var(--accent-glow);
+            cursor: pointer;
+        }
+        input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+        }
+        input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+        }
+        input[type=range]:disabled::-webkit-slider-thumb { cursor: default; }
+        input[type=range]:disabled::-moz-range-thumb { cursor: default; }
+​
+        /* ---------- layers ---------- */
+        .hidden-layer { opacity: 0; pointer-events: none; z-index: -1; transition: opacity 0.15s ease-out; }
+        .active-layer { opacity: 1; pointer-events: auto; z-index: 20; transition: opacity 0.15s ease-out; }
+​
+        /* ---------- landing ---------- */
+        #layer-landing {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px;
+        }
+        .landing-header {
+            position: relative;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 30;
+        }
+        .brand {
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            font-size: 1.25rem;
+            color: #000;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .brand-link {
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            opacity: 0.65;
+            transition: opacity 0.3s;
+            padding: 12px 0;
+        }
+        .brand-link:hover, .brand-link:focus-visible { opacity: 1; }
+​
+        .landing-main {
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+            z-index: 20;
+        }
+        .intro-card {
+            padding: 2rem;
+            border-radius: 24px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .intro-glow {
+            position: absolute;
+            top: -2.5rem;
+            right: -2.5rem;
+            width: 10rem;
+            height: 10rem;
+            background: #000;
+            opacity: 0.05;
+            border-radius: 50%;
+            filter: blur(40px);
+            transition: transform 0.7s;
+            pointer-events: none;
+        }
+        @media (hover: hover) { .intro-card:hover .intro-glow { transform: scale(1.5); } }
+        .intro-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000;
+            margin: 0 0 0.5rem;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+        .intro-sub {
+            color: rgba(0,0,0,0.7);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 0 0 2rem;
+        }
+​
+        .gumroad-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 1.25rem;
+            background: #000;
+            color: #fff;
+            border-radius: 9999px;
+            font-family: 'Syncopate', 'Verdana', 'DejaVu Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .gumroad-button::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+            transform: skewX(-20deg);
+            pointer-events: none;
+        }
+        @media (hover: hover) {
+            .gumroad-button:hover::after { animation: lightSweep 1.2s ease-out; }
+        }
+        .gumroad-button:active { transform: scale(0.97); box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        @keyframes lightSweep { 100% { left: 200%; } }
+​
+        .begin-btn {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 1rem 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(0,0,0,0.55);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.2s, opacity 0.2s;
+        }
+        .begin-btn:hover, .begin-btn:focus-visible { color: #000; }
+        .begin-btn:active { color: #000; opacity: 0.7; }
+​
+        .intro-note {
+            margin: 1.25rem 0 0;
+            font-size: 0.68rem;
+            letter-spacing: 0.04em;
+            color: rgba(0,0,0,0.55);
+            text-align: center;
+        }
+​
+        .landing-footer {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            padding-bottom: 1.5rem;
+            z-index: 20;
+        }
+        .landing-footer > div {
+            width: 50%;
+            text-align: right;
+            padding-right: 0.5rem;
+            color: rgba(255,255,255,0.65);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        @media (min-width: 640px) { .landing-footer > div { padding-right: 1rem; } }
+​
+        /* ---------- workspace ---------- */
+        #layer-workspace {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .tap-overlay { position: absolute; inset: 0; z-index: 20; cursor: pointer; }
+​
+        .hud-top {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            padding: 0 24px;
+            height: 96px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            z-index: 30;
+            pointer-events: none;
+        }
+        .hud-slot { display: flex; }
+        .hud-slot.start { justify-content: flex-start; }
+        .hud-slot.center { justify-content: center; }
+        .hud-slot.end { justify-content: flex-end; }
+​
+        .hud-btn {
+            padding: 12px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out, color 0.3s ease-out, filter 0.3s ease-out;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hud-btn:hover, .hud-btn:focus-visible, .hud-btn:active { opacity: 1; }
+        .hud-btn:active { transform: scale(0.95); }
+        #btn-back { margin-left: -12px; color: #000; }
+        #btn-audio-hud { margin-right: -12px; }
+        .icon-20 { width: 20px; height: 20px; }
+​
+        #status-container {
+            padding: 6px 16px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255,255,255,0.1);
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #status-text {
+            white-space: nowrap;
+            font-size: 10px;
+            line-height: 1;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-top: 1px;
+        }
+​
+        .play-wrap {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        #btn-master-play {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 0 40px rgba(0,0,0,0.6);
+            pointer-events: auto;
+        }
+        #btn-master-play:hover { border-color: rgba(255,255,255,0.3); }
+        #btn-master-play:focus-visible { border-color: rgba(255,255,255,0.6); }
+        #btn-master-play:active { transform: scale(0.9); }
+        .icon-32 {
+            width: 32px;
+            height: 32px;
+            color: #fff;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.4));
+        }
+        #btn-master-play:hover .icon-32, #btn-master-play:focus-visible .icon-32 { opacity: 1; }
+        #icon-play { margin-left: 4px; }
+​
+        .dock {
+            width: 100%;
+            padding: 0 16px 32px;
+            z-index: 30;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+        }
+        #btn-adjust {
+            padding: 16px 32px;
+            border-radius: 9999px;
+            color: #fff;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
+            pointer-events: auto;
+        }
+        #btn-adjust:active, #btn-adjust:focus-visible { transform: scale(0.95); }
+        .icon-16 { width: 16px; height: 16px; }
+​
+        /* ---------- settings sheet ---------- */
+        #settings-sheet {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%;
+            height: 75vh;
+            height: 75dvh;
+            border-radius: 40px 40px 0 0;
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .sheet-closed { transform: translateY(100%); }
+        .sheet-open { transform: translateY(0); }
+​
+        #sheet-handle {
+            width: 100%;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .handle-bar { width: 64px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 9999px; }
+​
+        .sheet-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            padding: 0 32px 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .sheet-head { display: flex; justify-content: space-between; align-items: flex-end; }
+        .sheet-title { font-size: 1.25rem; color: #fff; margin: 0; font-weight: 400; }
+        .sheet-close { color: rgba(255,255,255,0.6); padding: 8px; transition: color 0.2s; }
+        .sheet-close:hover, .sheet-close:focus-visible, .sheet-close:active { color: #fff; }
+        .icon-24 { width: 24px; height: 24px; }
+​
+        .ctl { display: flex; flex-direction: column; gap: 1rem; }
+        .ctl-label {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .ctl-label .val { color: #fff; }
+​
+        .row-toggle { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
+        .row-toggle-name { font-size: 11px; letter-spacing: 0.1em; color: #fff; text-transform: uppercase; }
+        .row-toggle-sub { font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 4px; font-family: 'Inter', -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+​
+        #btn-sync-toggle {
+            width: 48px;
+            height: 24px;
+            border-radius: 9999px;
+            position: relative;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            background: rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+        #btn-sync-toggle[aria-pressed="true"] {
+            background: var(--accent-glow);
+            box-shadow: 0 0 10px rgba(0,255,204,0.3);
+        }
+        #sync-knob {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            position: absolute;
+            top: 4px; left: 4px;
+            transition: transform 0.3s, background-color 0.3s;
+            background: #fff;
+        }
+        #btn-sync-toggle[aria-pressed="true"] #sync-knob { transform: translateX(24px); background: #000; }
+​
+        #audio-rhythm-control { opacity: 0.35; transition: opacity 0.3s; }
+        #audio-rhythm-control.unlocked { opacity: 1; }
+​
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .path-btn {
+            padding: 16px 0;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        @media (hover: hover) { .path-btn:hover { background: rgba(255,255,255,0.2); } }
+        .path-btn:active { transform: scale(0.95); }
+        .path-btn[aria-pressed="true"] {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
+​
+        .swatches { display: flex; gap: 16px; }
+        .swatch {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            opacity: 0.5;
+            transition: transform 0.2s, opacity 0.2s, border-color 0.2s;
+            flex-shrink: 0;
+        }
+        .swatch:active { transform: scale(0.9); }
+        .swatch[aria-pressed="true"] { border-color: #000; opacity: 1; }
+​
+        .group-label {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+​
+        /* ---------- a11y ---------- */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 1rem;
+            z-index: 100;
+            background: #000;
+            color: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            transition: top 0.2s ease;
+        }
+        .skip-link:focus { top: 1rem; }
+​
+        :focus-visible {
+            outline: 2px solid var(--accent-glow);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+​
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+​
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+​
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "BMDR",
+        "alternateName": "Mindful Practice Space",
+        "url": "https://bndrllc.com/bmdr",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web Browser",
+        "browserRequirements": "Requires JavaScript. Requires Web Audio API. Requires Canvas 2D.",
+        "description": "A quiet practice space for self-guided bilateral stimulation. A point of light sways left to right at your pace, with a low tone built around an 87 Hz core that travels with it. One file — no account, no tracking, works offline.",
+        "offers": {
+            "@type": "Offer",
+            "url": "https://bndrllc.gumroad.com/l/bemdr",
+            "availability": "https://schema.org/InStock"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "BNDR LLC",
+            "url": "https://bndrllc.com"
+        }
+    }
+    </script>
+</head>
+<body>
+    <a href="#layer-workspace" class="skip-link">Skip to practice space</a>
+​
+    <div class="bg-split" aria-hidden="true"></div>
+​
+    <canvas id="render-engine" aria-hidden="true"></canvas>
+​
+    <div id="layer-landing" class="active-layer">
+        <header class="landing-header">
+            <h1 class="font-edge brand">BMDR</h1>
+            <a href="https://bndrllc.com" target="_blank" rel="noopener noreferrer" aria-label="Visit BNDR LLC homepage (opens in new tab)" class="font-edge brand-link">BNDR&nbsp;LLC</a>
+        </header>
+​
+        <main class="landing-main">
+            <div class="glass-light intro-card">
+                <div class="intro-glow" aria-hidden="true"></div>
+                <h2 class="font-edge intro-title">Mindful<br>Integration</h2>
+                <p class="intro-sub">Gentle bilateral movement. A low, calming tone. A quiet, seamless practice space.</p>
+​
+                <a class="gumroad-button" href="https://bndrllc.gumroad.com/l/bemdr" target="_blank" rel="noopener noreferrer" aria-label="Own the file on Gumroad (opens in new tab)">
+                    <span>Own the File · Gumroad</span>
+                </a>
+​
+                <button type="button" onclick="Engine.mountWorkspace()" class="begin-btn">
+                    Begin Personal Practice
+                </button>
+​
+                <p class="intro-note">A practice tool for calm and focus — not therapy, treatment, or a medical device.</p>
+            </div>
+        </main>
+​
+        <footer class="landing-footer">
+            <div class="font-edge">&copy; 2026 BNDR LLC // BMDR</div>
+        </footer>
+    </div>
+​
+    <div id="layer-workspace" class="hidden-layer" role="region" aria-label="Practice space">
+​
+        <div class="tap-overlay" onclick="Engine.toggleSystem()" aria-hidden="true"></div>
+​
+        <div class="hud-top">
+            <div class="hud-slot start">
+                <button type="button" id="btn-back" onclick="Engine.unmountWorkspace()" aria-label="Return to landing page" class="hud-btn">
+                    <svg class="icon-20" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                </button>
+            </div>
+​
+            <div class="hud-slot center">
+                <div id="status-container" class="glass-dark" role="status" aria-live="polite" aria-atomic="true">
+                    <span id="status-text" class="font-edge animate-pulse text-white">Stillness</span>
+                </div>
+            </div>
+​
+            <div class="hud-slot end">
+                <button type="button" id="btn-audio-hud" onclick="Engine.toggleAudio()" aria-label="Toggle audio frequencies" aria-pressed="false" class="hud-btn opacity-50 text-white">
+                    <svg id="icon-audio-off" class="icon-20" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>
+                    <svg id="icon-audio-on" class="icon-20 hidden" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                </button>
+            </div>
+        </div>
+​
+        <div class="play-wrap">
+            <button type="button" id="btn-master-play" onclick="Engine.toggleSystem()" aria-label="Play bilateral stimulation" class="glass-dark">
+                <svg id="icon-play" class="icon-32" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                <svg id="icon-pause" class="icon-32 hidden" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>
+            </button>
+        </div>
+​
+        <div class="dock">
+            <button type="button" id="btn-adjust" onclick="Engine.toggleSheet()" aria-label="Open session adjustments" aria-expanded="false" aria-controls="settings-sheet" class="glass-dark font-edge">
+                <svg class="icon-16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg> Session Adjustments
+            </button>
+        </div>
+​
+        <div id="settings-sheet" class="glass-dark sheet-closed" role="dialog" aria-modal="false" aria-label="Session adjustments" aria-hidden="true" inert>
+            <div id="sheet-handle" onclick="Engine.toggleSheet()" role="button" tabindex="0" aria-label="Drag handle, click to close">
+                <div class="handle-bar" aria-hidden="true"></div>
+            </div>
+​
+            <div class="sheet-body">
+                <div class="sheet-head">
+                    <h3 class="font-edge sheet-title">Session Space</h3>
+                    <button type="button" onclick="Engine.toggleSheet()" aria-label="Close session adjustments" class="sheet-close"><svg class="icon-24" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+                </div>
+​
+                <div class="ctl">
+                    <label for="param-hz" class="font-edge ctl-label">
+                        <span>Visual Pace</span>
+                        <span id="label-hz" class="val" aria-live="polite">1.2</span>
+                    </label>
+                    <input type="range" id="param-hz" min="0.2" max="3.0" step="0.1" value="1.2" aria-valuemin="0.2" aria-valuemax="3.0" aria-valuenow="1.2" aria-label="Visual pace in hertz">
+                </div>
+​
+                <div class="row-toggle">
+                    <div>
+                        <div class="font-edge row-toggle-name">Link Rhythms</div>
+                        <div class="row-toggle-sub">Sync audio to visual pace</div>
+                    </div>
+                    <button type="button" id="btn-sync-toggle" onclick="Engine.toggleSync()" aria-label="Toggle audio rhythm sync" aria-pressed="true">
+                        <div id="sync-knob" aria-hidden="true"></div>
+                    </button>
+                </div>
+​
+                <div id="audio-rhythm-control" class="ctl">
+                    <label for="param-audio-hz" class="font-edge ctl-label">
+                        <span>Audio Pace</span>
+                        <span id="label-audio-hz" class="val" aria-live="polite">1.2</span>
+                    </label>
+                    <input type="range" id="param-audio-hz" min="0.2" max="3.0" step="0.1" value="1.2" aria-valuemin="0.2" aria-valuemax="3.0" aria-valuenow="1.2" aria-label="Audio pace in hertz" disabled>
+                </div>
+​
+                <div class="ctl">
+                    <label for="param-mass" class="font-edge ctl-label">
+                        <span>Visual Anchor Size</span>
+                        <span id="label-mass" class="val" aria-live="polite">60</span>
+                    </label>
+                    <input type="range" id="param-mass" min="20" max="150" step="5" value="60" aria-valuemin="20" aria-valuemax="150" aria-valuenow="60" aria-label="Visual anchor size in pixels">
+                </div>
+​
+                <div>
+                    <div class="font-edge group-label">Flow Pattern</div>
+                    <div class="grid-2" role="group" aria-label="Flow pattern selection">
+                        <button type="button" onclick="Engine.setPath('linear')" id="path-linear" aria-pressed="true" class="font-edge path-btn">Gentle Sway</button>
+                        <button type="button" onclick="Engine.setPath('lissajous')" id="path-lissajous" aria-pressed="false" class="font-edge path-btn">Infinite Flow</button>
+                    </div>
+                </div>
+​
+                <div>
+                    <div class="font-edge group-label">Soothing Palette</div>
+                    <div class="swatches" role="group" aria-label="Color palette selection">
+                        <button type="button" onclick="Engine.setColor('#00ffcc')" aria-label="Teal" aria-pressed="true" class="swatch" style="background:#00ffcc;box-shadow:0 0 20px #00ffcc"></button>
+                        <button type="button" onclick="Engine.setColor('#ff0055')" aria-label="Pink" aria-pressed="false" class="swatch" style="background:#ff0055"></button>
+                        <button type="button" onclick="Engine.setColor('#7000ff')" aria-label="Purple" aria-pressed="false" class="swatch" style="background:#7000ff"></button>
+                        <button type="button" onclick="Engine.setColor('#ffffff')" aria-label="White" aria-pressed="false" class="swatch" style="background:#ffffff"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+​
+    <script>
+        'use strict';
+​
+        document.addEventListener('DOMContentLoaded', () => {
+            Engine.init();
+        });
+​
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && Engine.sys.sheetOpen) {
+                Engine.toggleSheet();
+            }
+        });
+​
+        document.getElementById('sheet-handle')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                Engine.toggleSheet();
+            }
+        });
+​
+        /**
+         * BMDR Engine — bilateral stimulation controller.
+         * Manages the canvas render loop, Web Audio panning graph,
+         * and the settings sheet UI state.
+         * Fully self-contained: no external scripts, styles, or assets
+         * are required at runtime.
+         *
+         * @namespace Engine
+         */
+        const Engine = {
+            sys: {
+                active: false,
+                sheetOpen: false,
+                audioEnabled: false,
+                syncRates: true,
+                mode: 'idle'
+            },
+            params: {
+                hz: 1.2,
+                audioHz: 1.2,
+                mass: 60,
+                color: '#00ffcc',
+                path: 'linear',
+                time: 0,
+                audioTime: 0
+            },
+            gfx: {
+                canvas: null,
+                ctx: null,
+                w: 0,
+                h: 0,
+                req: null,
+                xNorm: 0
+            },
+            audio: {
+                ctx: null,
+                masterGain: null,
+                compressor: null,
+                merger: null,
+                gainL: null,
+                gainR: null,
+                baseFreq: 87,
+                ready: false
+            },
+​
+            init() {
+                this.gfx.canvas = document.getElementById('render-engine');
+                if (!this.gfx.canvas) return;
+​
+                this.gfx.ctx = this.gfx.canvas.getContext('2d', { alpha: true });
+                if (!this.gfx.ctx) return;
+​
+                window.addEventListener('resize', () => this.resize());
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden && this.sys.active) {
+                        this.toggleSystem(false);
+                    }
+                });
+                this.resize();
+                this.bindUI();
+                this.syncAudioHudVisual();
+            },
+​
+            syncAudioHudVisual() {
+                const btnHud = document.getElementById('btn-audio-hud');
+                const iconOff = document.getElementById('icon-audio-off');
+                const iconOn = document.getElementById('icon-audio-on');
+                if (!btnHud || !iconOff || !iconOn) return;
+​
+                if (this.sys.audioEnabled) {
+                    iconOff.classList.add('hidden');
+                    iconOn.classList.remove('hidden');
+                    btnHud.setAttribute('aria-pressed', 'true');
+                    btnHud.classList.remove('opacity-50', 'text-white');
+                    btnHud.style.color = this.params.color;
+                    btnHud.style.filter = `drop-shadow(0 0 8px ${this.params.color})`;
+                    btnHud.style.transform = 'scale(1.1)';
+                } else {
+                    iconOff.classList.remove('hidden');
+                    iconOn.classList.add('hidden');
+                    btnHud.setAttribute('aria-pressed', 'false');
+                    btnHud.classList.add('opacity-50', 'text-white');
+                    btnHud.style.color = '';
+                    btnHud.style.filter = '';
+                    btnHud.style.transform = 'scale(1)';
+                }
+            },
+​
+            bindUI() {
+                const hz = document.getElementById('param-hz');
+                const hzLabel = document.getElementById('label-hz');
+                hz.addEventListener('input', (e) => {
+                    this.params.hz = parseFloat(e.target.value);
+                    hzLabel.textContent = this.params.hz.toFixed(1);
+                    hz.setAttribute('aria-valuenow', String(this.params.hz));
+                    if (this.sys.syncRates) {
+                        this.params.audioHz = this.params.hz;
+                        const audioHzEl = document.getElementById('param-audio-hz');
+                        const audioHzLabel = document.getElementById('label-audio-hz');
+                        audioHzEl.value = String(this.params.hz);
+                        audioHzLabel.textContent = this.params.hz.toFixed(1);
+                        audioHzEl.setAttribute('aria-valuenow', String(this.params.hz));
+                    }
+                });
+​
+                const audioHz = document.getElementById('param-audio-hz');
+                const audioHzLabel = document.getElementById('label-audio-hz');
+                audioHz.addEventListener('input', (e) => {
+                    if (this.sys.syncRates) this.toggleSync(false);
+                    this.params.audioHz = parseFloat(e.target.value);
+                    audioHzLabel.textContent = this.params.audioHz.toFixed(1);
+                    audioHz.setAttribute('aria-valuenow', String(this.params.audioHz));
+                });
+​
+                const mass = document.getElementById('param-mass');
+                const massLabel = document.getElementById('label-mass');
+                mass.addEventListener('input', (e) => {
+                    this.params.mass = parseInt(e.target.value, 10);
+                    massLabel.textContent = String(this.params.mass);
+                    mass.setAttribute('aria-valuenow', String(this.params.mass));
+                });
+            },
+​
+            toggleSync(force) {
+                this.sys.syncRates = force !== undefined ? force : !this.sys.syncRates;
+​
+                const track = document.getElementById('btn-sync-toggle');
+                const audioBlock = document.getElementById('audio-rhythm-control');
+                const audioHzInput = document.getElementById('param-audio-hz');
+                track.setAttribute('aria-pressed', String(this.sys.syncRates));
+​
+                if (this.sys.syncRates) {
+                    audioBlock.classList.remove('unlocked');
+                    audioHzInput.disabled = true;
+                    this.params.audioHz = this.params.hz;
+                    audioHzInput.value = String(this.params.hz);
+                    audioHzInput.setAttribute('aria-valuenow', String(this.params.hz));
+                    document.getElementById('label-audio-hz').textContent = this.params.hz.toFixed(1);
+                    this.params.audioTime = this.params.time;
+                } else {
+                    audioBlock.classList.add('unlocked');
+                    audioHzInput.disabled = false;
+                }
+            },
+​
+            resize() {
+                this.gfx.w = window.innerWidth;
+                this.gfx.h = window.innerHeight;
+                const dpr = window.devicePixelRatio || 1;
+                this.gfx.canvas.width = Math.floor(this.gfx.w * dpr);
+                this.gfx.canvas.height = Math.floor(this.gfx.h * dpr);
+                this.gfx.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                this.gfx.ctx.scale(dpr, dpr);
+                if (!this.sys.active) this.render();
+            },
+​
+            mountWorkspace() {
+                document.getElementById('layer-landing').classList.replace('active-layer', 'hidden-layer');
+                document.getElementById('layer-workspace').classList.replace('hidden-layer', 'active-layer');
+                this.sys.mode = 'workspace';
+​
+                if (!this.sys.active) {
+                    this.toggleSystem(true);
+                } else {
+                    this.render();
+                }
+            },
+​
+            unmountWorkspace() {
+                if (this.sys.active) this.toggleSystem(false);
+                if (this.sys.sheetOpen) this.toggleSheet();
+                document.getElementById('layer-workspace').classList.replace('active-layer', 'hidden-layer');
+                document.getElementById('layer-landing').classList.replace('hidden-layer', 'active-layer');
+                this.sys.mode = 'idle';
+            },
+​
+            toggleSheet() {
+                this.sys.sheetOpen = !this.sys.sheetOpen;
+                const sheet = document.getElementById('settings-sheet');
+                const trigger = document.querySelector('button[aria-controls="settings-sheet"]');
+                if (this.sys.sheetOpen) {
+                    sheet.classList.replace('sheet-closed', 'sheet-open');
+                    sheet.removeAttribute('aria-hidden');
+                    sheet.removeAttribute('inert');
+                    sheet.setAttribute('aria-modal', 'true');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    trigger.setAttribute('aria-label', 'Close session adjustments');
+                    const closeBtn = sheet.querySelector('button[aria-label="Close session adjustments"]');
+                    if (closeBtn) closeBtn.focus();
+                } else {
+                    sheet.classList.replace('sheet-open', 'sheet-closed');
+                    sheet.setAttribute('aria-hidden', 'true');
+                    sheet.setAttribute('inert', '');
+                    sheet.setAttribute('aria-modal', 'false');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    trigger.setAttribute('aria-label', 'Open session adjustments');
+                    trigger.focus();
+                }
+            },
+​
+            setPath(type) {
+                this.params.path = type;
+                const l = document.getElementById('path-linear');
+                const i = document.getElementById('path-lissajous');
+                l.setAttribute('aria-pressed', String(type === 'linear'));
+                i.setAttribute('aria-pressed', String(type === 'lissajous'));
+                if (!this.sys.active) this.render();
+            },
+​
+            setColor(hex) {
+                this.params.color = hex;
+                const btns = document.querySelectorAll('#settings-sheet button[onclick^="Engine.setColor"]');
+                btns.forEach(b => {
+                    const isMatch = b.getAttribute('onclick').includes(hex);
+                    b.setAttribute('aria-pressed', String(isMatch));
+                    b.style.boxShadow = isMatch ? `0 0 20px ${hex}` : '';
+                });
+​
+                if (this.sys.active) {
+                    const statusText = document.getElementById('status-text');
+                    statusText.style.color = this.params.color;
+                    statusText.style.textShadow = `0 0 10px ${this.params.color}`;
+                }
+​
+                if (this.sys.audioEnabled) {
+                    const btnHud = document.getElementById('btn-audio-hud');
+                    if (btnHud) {
+                        btnHud.style.color = hex;
+                        btnHud.style.filter = `drop-shadow(0 0 8px ${hex})`;
+                    }
+                }
+​
+                if (!this.sys.active) this.render();
+            },
+​
+            toggleSystem(forceState) {
+                this.sys.active = forceState !== undefined ? forceState : !this.sys.active;
+                const iPlay = document.getElementById('icon-play');
+                const iPause = document.getElementById('icon-pause');
+                const btn = document.getElementById('btn-master-play');
+                const status = document.getElementById('status-text');
+​
+                if (this.sys.active) {
+                    iPlay.classList.add('hidden');
+                    iPause.classList.remove('hidden');
+                    btn.setAttribute('aria-label', 'Pause bilateral stimulation');
+                    btn.classList.add('opacity-10');
+                    window.setTimeout(() => { if (this.sys.active) btn.classList.replace('opacity-10', 'opacity-0'); }, 1000);
+​
+                    status.textContent = 'Flowing';
+                    status.classList.remove('animate-pulse', 'text-white');
+                    status.style.color = this.params.color;
+                    status.style.textShadow = `0 0 10px ${this.params.color}`;
+​
+                    if (this.sys.audioEnabled) this.igniteAudio();
+​
+                    this.lastTime = performance.now();
+                    this.loop();
+                } else {
+                    iPlay.classList.remove('hidden');
+                    iPause.classList.add('hidden');
+                    btn.setAttribute('aria-label', 'Play bilateral stimulation');
+                    btn.classList.remove('opacity-0', 'opacity-10');
+​
+                    status.textContent = 'Stillness';
+                    status.classList.add('animate-pulse', 'text-white');
+                    status.style.color = '';
+                    status.style.textShadow = '';
+​
+                    if (this.gfx.req) cancelAnimationFrame(this.gfx.req);
+​
+                    if (this.audio.ready && this.audio.masterGain && this.audio.ctx) {
+                        try {
+                            const now = this.audio.ctx.currentTime;
+                            this.audio.masterGain.gain.cancelScheduledValues(now);
+                            this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, now);
+                            this.audio.masterGain.gain.linearRampToValueAtTime(0, now + 0.3);
+                        } catch (err) {
+                            console.warn('BMDR: audio ramp-down failed', err);
+                        }
+                    }
+                }
+            },
+​
+            toggleAudio() {
+                this.sys.audioEnabled = !this.sys.audioEnabled;
+​
+                if (this.sys.audioEnabled) {
+                    if (this.sys.active) this.igniteAudio();
+                } else {
+                    if (this.audio.ready && this.audio.masterGain && this.audio.ctx) {
+                        try {
+                            const now = this.audio.ctx.currentTime;
+                            this.audio.masterGain.gain.cancelScheduledValues(now);
+                            this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, now);
+                            this.audio.masterGain.gain.linearRampToValueAtTime(0, now + 0.1);
+                        } catch (err) {
+                            console.warn('BMDR: audio ramp-down failed', err);
+                        }
+                    }
+                }
+                this.syncAudioHudVisual();
+            },
+​
+            igniteAudio() {
+                if (!this.audio.ctx) {
+                    try {
+                        const ACtx = window.AudioContext || window.webkitAudioContext;
+                        if (!ACtx) throw new Error('AudioContext not supported');
+​
+                        this.audio.ctx = new ACtx();
+​
+                        const comp = this.audio.ctx.createDynamicsCompressor();
+                        comp.threshold.value = -24;
+                        comp.knee.value = 10;
+                        comp.ratio.value = 12;
+                        comp.attack.value = 0.003;
+                        comp.release.value = 0.25;
+                        this.audio.compressor = comp;
+​
+                        const master = this.audio.ctx.createGain();
+                        master.gain.value = 0;
+                        this.audio.masterGain = master;
+​
+                        comp.connect(master);
+                        master.connect(this.audio.ctx.destination);
+​
+                        const coreMix = this.audio.ctx.createGain();
+                        coreMix.gain.value = 0.8;
+​
+                        const sub = this.audio.ctx.createOscillator();
+                        sub.type = 'triangle';
+                        sub.frequency.value = this.audio.baseFreq / 2;
+                        sub.connect(coreMix);
+                        sub.start();
+​
+                        const harm = this.audio.ctx.createOscillator();
+                        harm.type = 'sine';
+                        harm.frequency.value = this.audio.baseFreq * 2;
+                        const harmGain = this.audio.ctx.createGain();
+                        harmGain.gain.value = 0.4;
+                        harm.connect(harmGain);
+                        harmGain.connect(coreMix);
+                        harm.start();
+​
+                        const merger = this.audio.ctx.createChannelMerger(2);
+                        this.audio.merger = merger;
+                        this.audio.gainL = this.audio.ctx.createGain();
+                        this.audio.gainR = this.audio.ctx.createGain();
+​
+                        coreMix.connect(this.audio.gainL);
+                        coreMix.connect(this.audio.gainR);
+​
+                        this.audio.gainL.connect(merger, 0, 0);
+                        this.audio.gainR.connect(merger, 0, 1);
+                        merger.connect(comp);
+​
+                        this.audio.ready = true;
+                    } catch (err) {
+                        console.error('BMDR: audio engine init failed', err);
+                        this.sys.audioEnabled = false;
+                        this.audio.ready = false;
+                        this.syncAudioHudVisual();
+                        return;
+                    }
+                }
+​
+                if (this.audio.ctx.state === 'suspended') {
+                    this.audio.ctx.resume().catch(err => console.warn('BMDR: ctx resume failed', err));
+                }
+​
+                try {
+                    const now = this.audio.ctx.currentTime;
+                    this.audio.masterGain.gain.cancelScheduledValues(now);
+                    this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, now);
+                    this.audio.masterGain.gain.linearRampToValueAtTime(1.0, now + 1.5);
+                } catch (err) {
+                    console.warn('BMDR: audio ramp-up failed', err);
+                }
+            },
+​
+            modulateAudio() {
+                if (!this.audio.ready || !this.sys.audioEnabled || !this.audio.ctx) return;
+​
+                try {
+                    const now = this.audio.ctx.currentTime;
+                    let audioPanNorm = 0;
+                    if (this.sys.syncRates) {
+                        audioPanNorm = this.gfx.xNorm;
+                    } else {
+                        audioPanNorm = Math.sin(this.params.audioTime);
+                    }
+                    const volL = Math.max(0, 0.5 - (audioPanNorm * 0.5));
+                    const volR = Math.max(0, 0.5 + (audioPanNorm * 0.5));
+                    this.audio.gainL.gain.setValueAtTime(volL, now);
+                    this.audio.gainR.gain.setValueAtTime(volR, now);
+                } catch (err) {
+                    console.warn('BMDR: audio modulation failed', err);
+                }
+            },
+​
+            loop() {
+                if (!this.sys.active) return;
+                const now = performance.now();
+                const dt = (now - this.lastTime) / 1000;
+                this.lastTime = now;
+​
+                this.params.time += dt * this.params.hz * Math.PI;
+                if (this.sys.syncRates) {
+                    this.params.audioTime = this.params.time;
+                } else {
+                    this.params.audioTime += dt * this.params.audioHz * Math.PI;
+                }
+​
+                this.render();
+                this.modulateAudio();
+​
+                this.gfx.req = requestAnimationFrame(() => this.loop());
+            },
+​
+            render() {
+                const { ctx, w, h } = this.gfx;
+                if (!ctx) return;
+​
+                ctx.clearRect(0, 0, w, h);
+​
+                const cy = h / 2;
+                const r = this.params.mass;
+                const pad = r + 40;
+                const spanX = (w / 2) - pad;
+​
+                let x = w / 2;
+                let y = cy;
+​
+                if (this.sys.active) {
+                    if (this.params.path === 'linear') {
+                        this.gfx.xNorm = Math.sin(this.params.time);
+                        x = (w / 2) + (spanX * this.gfx.xNorm);
+                    } else {
+                        this.gfx.xNorm = Math.sin(this.params.time);
+                        x = (w / 2) + (spanX * this.gfx.xNorm);
+                        y = cy + ((h / 4 - pad) * Math.sin(this.params.time * 2));
+                    }
+                } else {
+                    this.gfx.xNorm = 0;
+                }
+​
+                const isOnWhite = x < (w / 2);
+​
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+​
+                ctx.shadowColor = this.params.color;
+                ctx.shadowBlur = 60;
+​
+                if (isOnWhite) {
+                    ctx.fillStyle = '#000';
+                    ctx.fill();
+                    ctx.lineWidth = 6;
+                    ctx.strokeStyle = this.params.color;
+                    ctx.stroke();
+                } else {
+                    ctx.fillStyle = this.params.color;
+                    ctx.fill();
+                }
+​
+                ctx.shadowBlur = 0;
+                ctx.beginPath();
+                ctx.arc(x, y, r * 0.3, 0, Math.PI * 2);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+            }
+        };
+    </script>
+</body>
+</html>
+​
