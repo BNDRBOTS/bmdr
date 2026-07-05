@@ -1,801 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>BMDR | Mindful Reprocessing</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
-    
-    <!-- Mobile-First Configuration: Eradicates sticky hovers on touch devices -->
-    <script>
-        tailwind = {
-            config: {
-                future: {
-                    hoverOnlyWhenSupported: true,
-                }
-            }
-        }
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://js.gumroad.com/2.0/js/gumroad.js" defer></script>
-    <script src="https://unpkg.com/lucide@latest" defer></script>
-    
-    <style>
-        :root {
-            --glass-black: rgba(0, 0, 0, 0.75);
-            --glass-white: rgba(255, 255, 255, 0.75);
-            --blur: blur(24px);
-            --accent-glow: #00ffcc;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BMDR — A quiet practice space for bilateral stimulation</title>
+<meta name="title" content="BMDR — A quiet practice space for bilateral stimulation">
+<meta name="description" content="BMDR is a small, focused practice space for self-guided bilateral stimulation. A point of light sways left to right at your pace, with a low tone that travels with it. No account, no tracking, no noise. Free in your browser, or one purchase to own the file.">
+<meta name="author" content="BNDR LLC">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark light">
+<meta name="application-name" content="BMDR">
+<meta name="apple-mobile-web-app-title" content="BMDR">
+<link rel="canonical" href="https://bndrllc.com/bmdr">
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            overscroll-behavior: none; 
-            font-family: 'Inter', sans-serif;
-            background: #000;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none; 
-        }
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bndrllc.com/bmdr">
+<meta property="og:site_name" content="BNDR LLC">
+<meta property="og:title" content="BMDR — A quiet practice space for bilateral stimulation">
+<meta property="og:description" content="A point of light sways left to right at your pace, with a low tone that travels with it. No account, no tracking, no noise. Free in your browser, or one purchase to own the file.">
+<meta property="og:image" content="https://r2-uploader-production.up.railway.app/files/6a9dd45e-e7a0-4396-a084-5f11b737e92e.png">
+<meta property="og:image:alt" content="BMDR bilateral stimulation practice space">
+<meta property="og:locale" content="en_US">
 
-        .bg-split {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(105deg, #e8e8e8 0%, #e8e8e8 50%, #000000 50%, #000000 100%);
-            z-index: 0;
-        }
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://bndrllc.com/bmdr">
+<meta name="twitter:title" content="BMDR — A quiet practice space for bilateral stimulation">
+<meta name="twitter:description" content="A point of light sways left to right at your pace, with a low tone that travels with it. No account, no tracking, no noise.">
+<meta name="twitter:image" content="https://r2-uploader-production.up.railway.app/files/6a9dd45e-e7a0-4396-a084-5f11b737e92e.png">
+<meta name="twitter:image:alt" content="BMDR bilateral stimulation practice space">
 
-        .glass-dark {
-            background: var(--glass-black);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;500;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "BMDR",
+      "alternateName": "Mindful Reprocessing",
+      "url": "https://bndrllc.com/bmdr",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web Browser",
+      "browserRequirements": "Requires JavaScript. Requires Web Audio API. Requires Canvas 2D.",
+      "description": "A quiet practice space for self-guided bilateral stimulation. A point of light sways left to right at your pace, with a low tone built around an 87 Hz core that travels with it. No account, no tracking, no noise.",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Personal practice",
+          "price": "0",
+          "priceCurrency": "USD",
+          "url": "https://bndrllc.com/bmdr#/app",
+          "availability": "https://schema.org/InStock"
+        },
+        {
+          "@type": "Offer",
+          "name": "Full practice — own the file",
+          "url": "https://bndrllc.gumroad.com/l/bemdr",
+          "availability": "https://schema.org/InStock"
         }
-
-        .glass-light {
-            background: var(--glass-white);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
-            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+      ],
+      "publisher": {
+        "@type": "Organization",
+        "name": "BNDR LLC",
+        "url": "https://bndrllc.com"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I need to install anything?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. BMDR is a single page that runs in any modern browser — open it and you’re in. On a phone you can add it to your home screen and it behaves like an app. Once it has loaded, it doesn’t need a connection." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does it pause when I switch tabs?",
+          "acceptedAnswer": { "@type": "Answer", "text": "On purpose. Bilateral stimulation only does its job while you’re actually following the anchor, so the moment the tab is hidden the session stops. When you come back, you resume with one tap — no lost settings." }
+        },
+        {
+          "@type": "Question",
+          "name": "What exactly am I hearing?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A low tone built around an 87 Hz core: a triangle wave at 43.5 Hz underneath and a soft sine at 174 Hz above it. As the light travels, the loudness shifts between your left and right ear. A gentle compressor keeps the level even, and it fades in over 1.5 seconds." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need headphones?",
+          "acceptedAnswer": { "@type": "Answer", "text": "They help. The left-right movement of the tone is the point, and headphones make it unmistakable. Speakers work too, and the audio is entirely optional — plenty of people practice with the light alone." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this EMDR therapy?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. EMDR is a structured psychotherapy done with a trained clinician. BMDR borrows one ingredient — the steady left-right rhythm — for self-guided settling and focus. It isn’t treatment, and it isn’t a substitute for working with a professional on difficult material." }
+        },
+        {
+          "@type": "Question",
+          "name": "What do the two flow patterns do?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Gentle Sway moves the anchor along a straight, even line — the classic side-to-side. Infinite Flow traces a slow figure-eight, which some people find easier to follow for longer sessions because it never feels repetitive." }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens to my data?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Nothing, because there isn’t any. No account, no analytics, no tracking pixels. Your session runs on your device and ends there. There is nothing to delete because nothing was kept." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I change settings mid-session?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The adjustment sheet slides up over the session at any time — pace, size, color, pattern, and audio all apply the moment you touch them. Escape or the close button puts it away without breaking your rhythm." }
         }
-
-        @media (hover: hover) {
-            .glass-light:hover {
-                box-shadow: 0 40px 80px rgba(0,0,0,0.15);
-                transform: translateY(-4px);
-            }
-        }
-
-        .font-edge { font-family: 'Syncopate', sans-serif; }
-
-        #render-engine {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            pointer-events: none;
-            touch-action: none;
-        }
-
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
-            height: 40px; 
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 24px;
-            width: 24px;
-            border-radius: 50%;
-            background: #fff;
-            box-shadow: 0 0 20px var(--accent-glow);
-            cursor: pointer;
-            margin-top: -10px;
-            transition: transform 0.2s ease;
-        }
-        input[type=range]::-webkit-slider-thumb:active {
-            transform: scale(1.15);
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            cursor: pointer;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-        }
-
-        #settings-sheet {
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .sheet-closed { transform: translateY(100%); }
-        .sheet-open { transform: translateY(0); }
-
-        .hidden-layer { opacity: 0; pointer-events: none; z-index: -1; transition: opacity 0.15s ease-out; }
-        .active-layer { opacity: 1; pointer-events: auto; z-index: 20; transition: opacity 0.15s ease-out; }
-
-        .gumroad-button {
-            display: inline-flex !important;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 1.25rem !important;
-            background: #000 !important;
-            color: #fff !important;
-            border-radius: 9999px !important;
-            font-family: 'Syncopate', sans-serif !important;
-            font-weight: 700 !important;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            box-shadow: 0 0 30px rgba(0,0,0,0.3) !important;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-            border: 1px solid rgba(255,255,255,0.2) !important;
-            position: relative;
-            overflow: hidden;
-        }
-        .gumroad-button::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
-            transform: skewX(-20deg);
-            pointer-events: none;
-        }
-        @media (hover: hover) {
-            .gumroad-button:hover::after {
-                animation: lightSweep 1.2s ease-out;
-            }
-        }
-        .gumroad-button:active { transform: scale(0.97) !important; box-shadow: 0 0 10px rgba(0,0,0,0.5) !important; }
-
-        @keyframes lightSweep {
-            100% { left: 200%; }
-        }
-    </style>
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
+<a class="skip-link" href="#view">Skip to content</a>
+<nav id="nav" aria-label="Site">
+  <a class="brand" href="#/">BMDR</a>
+  <div class="links">
+    <a data-r="index" href="#/">Index</a>
+    <a data-r="method" href="#/method">Method</a>
+    <a data-r="features" href="#/features">Features</a>
+    <a data-r="pricing" href="#/pricing">Pricing</a>
+    <a data-r="faq" href="#/faq">FAQ</a>
+  </div>
+</nav>
+<div id="nav-cta">
+  <a class="site-logo" href="https://bndrllc.com" target="_blank" rel="noopener noreferrer" aria-label="Visit BNDR LLC homepage (opens in new tab)"><img src="https://r2-uploader-production.up.railway.app/files/6a9dd45e-e7a0-4396-a084-5f11b737e92e.png" alt="BNDR LLC" width="80" height="20"></a>
+  <a class="nav-app mag" data-r="app" href="#/app"><span class="mag-in">Open the app</span></a>
+</div>
 
-    <div class="bg-split"></div>
+<div id="view">
 
-    <canvas id="render-engine"></canvas>
+<!-- ============ 01 INDEX ============ -->
+<main class="page" data-route="index">
+  <div class="wrap">
+    <section id="hero">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-inner">
+        <p class="kicker blend" data-reveal>Self-guided bilateral stimulation</p>
+        <h1 style="margin-top:22px">
+          <span class="k-head blend" style="display:block">Follow the light.</span>
+          <span class="k-head blend" style="display:block">Let the rest go quiet.</span>
+        </h1>
+        <p class="body-lg blend" data-reveal style="margin-top:34px">BMDR is a small practice space that lives in your browser. A single point of light sways left to right at a pace you choose, with a low tone that travels with it. You follow. That’s the whole practice — no account, no feed, no noise.</p>
+        <div class="hero-cta-row">
+          <a class="btn btn-solid mag" data-reveal href="#/app"><span class="mag-in">Begin a session</span></a>
+          <a class="btn btn-line mag blend" data-reveal href="#/method"><span class="mag-in">How it works</span></a>
+        </div>
+      </div>
+      <div id="eng-read" aria-hidden="true">Engine preview · 0.4 Hz · x +0.00</div>
+    </section>
 
-    <div id="layer-landing" class="fixed inset-0 flex flex-col justify-between p-6 active-layer">
-        <header class="relative w-full h-20 flex justify-between items-center z-30">
-            <h1 class="font-edge font-bold tracking-widest text-xl text-black">BMDR</h1>
-            
-            <a href="http://bndrllc.com" target="_blank" rel="noopener noreferrer" class="opacity-60 hover:opacity-100 transition-all duration-300">
-                <img src="https://r2-uploader-production.up.railway.app/files/6a9dd45e-e7a0-4396-a084-5f11b737e92e.png" alt="BNDR LLC" class="h-5 w-auto object-contain filter brightness-0 invert">
-            </a>
-        </header>
+    <section class="band">
+      <div class="metrics blend" data-reveal>
+        <div class="metric"><b>0.2–3.0</b><span>Hz pace range</span></div>
+        <div class="metric"><b>20–150</b><span>px anchor size</span></div>
+        <div class="metric"><b>87</b><span>Hz audio core</span></div>
+        <div class="metric"><b>2</b><span>flow patterns</span></div>
+        <div class="metric"><b>4</b><span>palettes</span></div>
+        <div class="metric"><b>0</b><span>accounts</span></div>
+      </div>
+    </section>
 
-        <main class="w-full max-w-md mx-auto flex flex-col justify-center flex-grow z-20">
-            <div class="glass-light p-8 rounded-3xl mb-6 relative overflow-hidden group">
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-black opacity-5 rounded-full blur-2xl transition-transform duration-700 group-hover:scale-150"></div>
-                <h2 class="font-edge text-2xl font-bold text-black mb-2 leading-none uppercase">Mindful<br>Integration</h2>
-                <p class="text-black/70 text-sm font-medium mb-8">Gentle bilateral movement. Calming holistic frequencies. Seamless therapeutic space.</p>
-                
-                <!-- Replace the href below with your exact Gumroad product link. Gumroad's native JS will handle the rest. -->
-                <a class="gumroad-button" href="https://bndrllc.gumroad.com/l/bemdr" data-gumroad-single-item="true">
-                    <span>Unlock Full Practice</span>
-                </a>
-                
-                <button onclick="Engine.mountWorkspace()" class="w-full mt-4 py-4 text-xs font-bold text-black/40 hover:text-black active:text-black active:opacity-70 uppercase tracking-widest transition-colors">
-                    Begin Personal Practice
-                </button>
-            </div>
-        </main>
+    <section class="band">
+      <p class="kicker blend" data-reveal>Privacy architecture</p>
+      <h2 class="k-head blend" style="margin-top:18px">Built to leave you alone</h2>
+      <div class="trio">
+        <div class="card invert track" data-reveal>
+          <h3>Local only</h3>
+          <p>Everything happens on your device. There’s no login, no sync, and no server waiting on the other end. Close the tab and the session is gone.</p>
+        </div>
+        <div class="card invert track" data-reveal>
+          <h3>Auto-pause</h3>
+          <p>Switch tabs or let the screen sleep and the session stops on its own. It never runs at you — it waits for you to come back.</p>
+        </div>
+        <div class="card invert track" data-reveal>
+          <h3>No gamification</h3>
+          <p>No streaks, badges, or reminders. The app doesn’t want you back tomorrow. It’s done when you feel done.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
 
-        <footer class="w-full flex justify-end pb-6 z-20">
-            <div class="w-1/2 text-right pr-2 sm:pr-4 text-white/50 text-[10px] font-edge tracking-[0.2em] uppercase">
-                &copy; 2026 BNDR LLC // BEMDR
-            </div>
-        </footer>
-    </div>
+<!-- ============ 02 METHOD ============ -->
+<main class="page" data-route="method">
+  <div class="wrap">
+    <section class="band" style="padding-top:calc(64px + 9vh)">
+      <p class="kicker blend" data-reveal>The method</p>
+      <h1 class="k-head blend" style="margin-top:18px">A steady rhythm,<br>left to right</h1>
+      <div class="m-grid" style="margin-top:7vh">
+        <p class="body-lg blend" data-reveal>Bilateral stimulation is a simple pattern: your attention is guided from one side of your body to the other, over and over, at a steady pace. Therapists use versions of it inside EMDR, a structured therapy for processing difficult memories. BMDR is not that. It borrows the rhythm — not the clinical protocol — and gives you a quiet place to use it on your own terms: to settle before sleep, to come down after a hard conversation, to give a racing mind one predictable thing to hold.</p>
+        <div class="card invert track m-note" data-reveal>
+          <h3 class="k-sub" style="margin-bottom:12px">Worth saying plainly</h3>
+          <p style="font-size:.92rem">BMDR is a practice tool, not treatment. It isn’t a medical device and it doesn’t replace care. If you’re carrying something heavy, that work belongs in a room with a professional.</p>
+        </div>
+      </div>
 
-    <div id="layer-workspace" class="fixed inset-0 flex flex-col justify-end hidden-layer">
-        
-        <div class="absolute inset-0 z-20 cursor-pointer" onclick="Engine.toggleSystem()"></div>
+      <div class="steps">
+        <p class="kicker blend" data-reveal style="margin-bottom:10px">One session, five moves</p>
+        <div class="step invert track" data-reveal>
+          <div class="num">01</div>
+          <div><h3>Arrive</h3><p>Open the practice space. The status line reads <em>Stillness</em>. Nothing moves until you ask it to.</p></div>
+          <span class="chip">Status · Stillness</span>
+        </div>
+        <div class="step invert track" data-reveal>
+          <div class="num">02</div>
+          <div><h3>Set the pace</h3><p>One slider sets how fast the light travels — from a slow 0.2 Hz drift to a brisk 3.0 Hz sweep. Most people settle in near the 1.2 Hz default.</p></div>
+          <span class="chip">Visual pace · 0.2–3.0 Hz</span>
+        </div>
+        <div class="step invert track" data-reveal>
+          <div class="num">03</div>
+          <div><h3>Shape the anchor</h3><p>Make the light as small as 20 px or as bold as 150 px, pick one of four colors, and choose its path — a straight Gentle Sway or a looping Infinite Flow.</p></div>
+          <span class="chip">Anchor · 20–150 px</span>
+        </div>
+        <div class="step invert track" data-reveal>
+          <div class="num">04</div>
+          <div><h3>Follow</h3><p>Press play and the status turns to <em>Flowing</em>. Keep your head still and let your eyes do the traveling. Turn on audio and a low tone built around 87 Hz pans ear to ear — locked to the light, or on its own rhythm.</p></div>
+          <span class="chip">Audio · 87 Hz core</span>
+        </div>
+        <div class="step invert track" data-reveal>
+          <div class="num">05</div>
+          <div><h3>Return</h3><p>Tap anywhere to pause. Sit for a breath before you go. And if life interrupts mid-session, BMDR pauses itself and waits.</p></div>
+          <span class="chip">Auto-pause · On</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
 
-        <!-- Surgically Enforced Mathematical Alignment: Grid Structure replaces fragile absolute transforms -->
-        <div class="absolute top-0 left-0 w-full px-6 h-24 grid grid-cols-3 items-center z-30 pointer-events-none">
-            
-            <div class="flex justify-start">
-                <button onclick="Engine.unmountWorkspace()" class="p-3 -ml-3 opacity-50 hover:opacity-100 active:opacity-100 active:scale-95 transition-all text-black pointer-events-auto">
-                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                </button>
-            </div>
-            
-            <div class="flex justify-center">
-                <div id="status-container" class="glass-dark px-4 py-1.5 rounded-full border border-white/10 pointer-events-auto flex items-center justify-center">
-                    <span id="status-text" class="whitespace-nowrap font-edge text-[10px] leading-none tracking-[0.3em] uppercase animate-pulse text-white mt-[1px]">Stillness</span>
-                </div>
-            </div>
-            
-            <div class="flex justify-end">
-                <button id="btn-audio-hud" onclick="Engine.toggleAudio()" class="p-3 -mr-3 opacity-50 hover:opacity-100 active:opacity-100 active:scale-95 transition-all duration-300 ease-out text-white pointer-events-auto flex items-center justify-center">
-                    <i data-lucide="volume-x" id="icon-audio-off" class="w-5 h-5"></i>
-                    <i data-lucide="volume-2" id="icon-audio-on" class="w-5 h-5 hidden"></i>
-                </button>
-            </div>
+<!-- ============ 03 FEATURES ============ -->
+<main class="page" data-route="features">
+  <div class="wrap">
+    <section class="band" style="padding-top:calc(64px + 9vh)">
+      <p class="kicker blend" data-reveal>The interactive ledger</p>
+      <h1 class="k-head blend" style="margin-top:18px">Every control,<br>accounted for</h1>
+      <p class="body-lg blend" data-reveal style="margin-top:30px">These aren’t mockups. The sliders below run the same ranges as the app itself — drag them and watch the anchor respond.</p>
 
+      <div class="ledger">
+        <div class="card glass-l track mod" data-reveal>
+          <h3>Visual pace</h3>
+          <p class="mod-sub">How fast the anchor travels, in full left-right cycles per second.</p>
+          <div class="readout"><span id="f-hz-val">1.2</span><small>Hz · range 0.2–3.0</small></div>
+          <input type="range" id="f-hz" min="0.2" max="3.0" step="0.1" value="1.2" aria-label="Visual pace in hertz">
+          <div class="lane" aria-hidden="true"><span class="mid"></span><div id="demo-dot"></div></div>
         </div>
 
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 flex items-center justify-center pointer-events-none">
-            <button id="btn-master-play" onclick="Engine.toggleSystem()" class="w-20 h-20 rounded-full border border-white/10 glass-dark flex items-center justify-center transition-all duration-200 active:scale-90 shadow-[0_0_40px_rgba(0,0,0,0.6)] group hover:border-white/30 pointer-events-auto">
-                <i data-lucide="play" id="icon-play" class="w-8 h-8 ml-1 text-white opacity-80 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"></i>
-                <i data-lucide="pause" id="icon-pause" class="w-8 h-8 hidden text-white opacity-80 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"></i>
-            </button>
+        <div class="card glass-d track mod" data-reveal>
+          <h3>Anchor size</h3>
+          <p class="mod-sub">The light can be a pinpoint or a presence. Size changes apply instantly, mid-session.</p>
+          <div class="readout"><span id="f-px-val">60</span><small>px · range 20–150</small></div>
+          <input type="range" id="f-px" min="20" max="150" step="5" value="60" aria-label="Anchor size in pixels">
+          <h3 style="margin-top:34px">Soothing palette</h3>
+          <p class="mod-sub">Four tones, one job: be easy to look at for a long time.</p>
+          <div class="chips">
+            <div class="chip-wrap"><div class="chip-c" data-c="#00ffcc" style="background:#00ffcc"></div><code>#00FFCC</code></div>
+            <div class="chip-wrap"><div class="chip-c" data-c="#ff0055" style="background:#ff0055"></div><code>#FF0055</code></div>
+            <div class="chip-wrap"><div class="chip-c" data-c="#7000ff" style="background:#7000ff"></div><code>#7000FF</code></div>
+            <div class="chip-wrap"><div class="chip-c" data-c="#ffffff" style="background:#ffffff"></div><code>#FFFFFF</code></div>
+          </div>
         </div>
 
-        <div class="w-full px-4 pb-8 z-30 flex justify-center pointer-events-none">
-            <button onclick="Engine.toggleSheet()" class="glass-dark px-8 py-4 rounded-full text-white font-edge text-xs tracking-widest uppercase flex items-center gap-3 active:scale-95 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-transform pointer-events-auto">
-                <i data-lucide="sliders" class="w-4 h-4"></i> Session Adjustments
-            </button>
+        <div class="card glass-l track mod" data-reveal>
+          <h3>Two flow patterns</h3>
+          <p class="mod-sub">Gentle Sway is the classic straight line. Infinite Flow traces a slow figure-eight that never feels mechanical.</p>
+          <div class="paths">
+            <figure class="pathbox">
+              <svg viewBox="0 0 300 130" aria-hidden="true">
+                <line x1="30" y1="65" x2="270" y2="65" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+                <circle id="sway-dot" cx="150" cy="65" r="9" fill="#00ffcc"/>
+              </svg>
+              <figcaption>Gentle sway · linear</figcaption>
+            </figure>
+            <figure class="pathbox">
+              <svg viewBox="0 0 300 130" aria-hidden="true">
+                <path id="liss-path" d="" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+                <circle id="liss-dot" cx="150" cy="65" r="9" fill="#00ffcc"/>
+              </svg>
+              <figcaption>Infinite flow · lissajous</figcaption>
+            </figure>
+          </div>
         </div>
 
-        <!-- Mobile-First h-[75dvh] enforces exact dynamic viewport height anchoring, preventing breakage by browser toolbars -->
-        <div id="settings-sheet" class="absolute bottom-0 left-0 w-full h-[75dvh] glass-dark rounded-t-[40px] z-40 flex flex-col sheet-closed border-t border-white/10">
-            <div class="w-full p-4 flex justify-center items-center cursor-pointer" onclick="Engine.toggleSheet()">
-                <div class="w-16 h-1.5 bg-white/20 rounded-full"></div>
-            </div>
-            
-            <!-- overscroll-contain enforces mathematical scroll trapping. Background will not bleed/rubber-band -->
-            <div class="flex-grow overflow-y-auto overscroll-contain px-8 pb-12 space-y-8">
-                <div class="flex justify-between items-end mb-8">
-                    <h3 class="font-edge text-white text-xl">Session Space</h3>
-                    <button onclick="Engine.toggleSheet()" class="text-white/50 p-2 active:text-white transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
-                </div>
-
-                <div class="space-y-4">
-                    <div class="flex justify-between text-white/70 font-edge text-xs tracking-widest">
-                        <span>Visual Pace</span>
-                        <span id="label-hz" class="text-white">1.2</span>
-                    </div>
-                    <input type="range" id="param-hz" min="0.2" max="3.0" step="0.1" value="1.2">
-                </div>
-
-                <div class="flex justify-between items-center py-2">
-                    <div>
-                        <div class="font-edge text-white text-[11px] tracking-widest">Link Rhythms</div>
-                        <div class="text-white/40 text-[10px]">Sync audio to visual pace</div>
-                    </div>
-                    <button id="btn-sync-toggle" onclick="Engine.toggleSync()" class="w-12 h-6 rounded-full bg-[var(--accent-glow)] shadow-[0_0_10px_rgba(0,255,204,0.3)] relative transition-colors duration-300">
-                        <div id="sync-knob" class="w-4 h-4 bg-black rounded-full absolute top-1 left-[26px] transition-transform duration-300"></div>
-                    </button>
-                </div>
-
-                <div id="audio-rhythm-control" class="space-y-4 opacity-30 transition-opacity duration-300">
-                    <div class="flex justify-between text-white/70 font-edge text-xs tracking-widest">
-                        <span>Audio Pace</span>
-                        <span id="label-audio-hz" class="text-white">1.2</span>
-                    </div>
-                    <input type="range" id="param-audio-hz" min="0.2" max="3.0" step="0.1" value="1.2">
-                </div>
-
-                <div class="space-y-4">
-                    <div class="flex justify-between text-white/70 font-edge text-xs tracking-widest">
-                        <span>Visual Anchor Size</span>
-                        <span id="label-mass" class="text-white">60</span>
-                    </div>
-                    <input type="range" id="param-mass" min="20" max="150" step="5" value="60">
-                </div>
-
-                <div class="space-y-4">
-                    <div class="text-white/70 font-edge text-xs tracking-widest mb-2">Flow Pattern</div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <button onclick="Engine.setPath('linear')" id="path-linear" class="py-4 rounded-2xl bg-white text-black font-edge text-[10px] font-bold uppercase transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95">Gentle Sway</button>
-                        <button onclick="Engine.setPath('lissajous')" id="path-lissajous" class="py-4 rounded-2xl bg-white/10 text-white font-edge text-[10px] font-bold uppercase transition-all active:scale-95">Infinite Flow</button>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <div class="text-white/70 font-edge text-xs tracking-widest mb-2">Soothing Palette</div>
-                    <div class="flex gap-4">
-                        <button onclick="Engine.setColor('#00ffcc')" class="w-14 h-14 rounded-full bg-[#00ffcc] border-4 border-black shadow-[0_0_20px_#00ffcc] active-color transition-transform active:scale-90"></button>
-                        <button onclick="Engine.setColor('#ff0055')" class="w-14 h-14 rounded-full bg-[#ff0055] border-4 border-transparent opacity-50 transition-transform active:scale-90"></button>
-                        <button onclick="Engine.setColor('#7000ff')" class="w-14 h-14 rounded-full bg-[#7000ff] border-4 border-transparent opacity-50 transition-transform active:scale-90"></button>
-                        <button onclick="Engine.setColor('#ffffff')" class="w-14 h-14 rounded-full bg-[#ffffff] border-4 border-transparent opacity-50 transition-transform active:scale-90"></button>
-                    </div>
-                </div>
-            </div>
+        <div class="card glass-d track mod" data-reveal>
+          <h3>The 87 Hz audio layer</h3>
+          <p class="mod-sub">The tone is built from two voices around an 87 Hz core, and its loudness shifts between your ears to match the anchor’s position.</p>
+          <div class="stack">
+            <div class="layer-row"><b>Sub · 43.5 Hz</b><span class="bar" style="width:100%"></span><span class="muted">triangle wave, the floor</span></div>
+            <div class="layer-row"><b>Core · 87 Hz</b><span class="bar" style="width:72%"></span><span class="muted">reference pitch</span></div>
+            <div class="layer-row"><b>Harmonic · 174 Hz</b><span class="bar" style="width:40%"></span><span class="muted">sine, mixed at 40%</span></div>
+          </div>
+          <div class="pan-meter" aria-hidden="true">
+            <span class="pm" id="panL"><i></i></span><em>L · R</em><span class="pm" id="panR"><i></i></span>
+          </div>
+          <p class="mod-sub" style="margin:18px 0 0">A soft compressor keeps it from ever spiking, and the whole thing fades in over 1.5 seconds. Nothing startles. Audio can follow the light exactly, or run at its own 0.2–3.0 Hz pace.</p>
         </div>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.lucide) lucide.createIcons();
-            Engine.init();
-        });
+        <div class="card invert track full" data-reveal>
+          <h3 class="k-sub">Quiet engineering</h3>
+          <ul class="qlist">
+            <li>Escape closes the settings sheet; one tap anywhere pauses or resumes.</li>
+            <li>Every control is labeled for screen readers, with live announcements for state changes.</li>
+            <li>The session pauses itself the moment the tab is hidden.</li>
+            <li>One file. Loads once, then works without a connection.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
 
-        const Engine = {
-            sys: {
-                active: false,
-                sheetOpen: false,
-                audioEnabled: false, 
-                syncRates: true, 
-                mode: 'idle'
-            },
-            params: {
-                hz: 1.2,
-                audioHz: 1.2,
-                mass: 60,
-                path: 'linear',
-                color: '#00ffcc',
-                time: 0,
-                audioTime: 0
-            },
-            gfx: {
-                canvas: null,
-                ctx: null,
-                w: 0,
-                h: 0,
-                req: null,
-                xNorm: 0
-            },
-            audio: {
-                ctx: null,
-                masterGain: null,
-                compressor: null,
-                merger: null,
-                gainL: null,
-                gainR: null,
-                baseFreq: 87,
-                ready: false
-            },
+<!-- ============ 04 PRICING ============ -->
+<main class="page" data-route="pricing">
+  <div class="wrap">
+    <section class="band" style="padding-top:calc(64px + 9vh)">
+      <p class="kicker blend" data-reveal>Pricing</p>
+      <h1 class="k-head blend" style="margin-top:18px">Two ways in.<br>No subscriptions.</h1>
+      <div class="price-grid">
+        <div class="price-card glass-l track" data-reveal>
+          <span class="tier">Personal practice</span>
+          <div class="amount">Free</div>
+          <p class="under">Right here, in your browser.</p>
+          <ul class="tick">
+            <li>The full practice space — nothing stripped down</li>
+            <li>Complete 0.2–3.0 Hz pace range</li>
+            <li>Both flow patterns, all four palettes</li>
+            <li>Bilateral audio with the 87 Hz core</li>
+            <li>No account, no email, no tracking</li>
+          </ul>
+          <a class="btn mag" style="background:#0a0a0a;color:#fff" href="#/app"><span class="mag-in">Begin personal practice</span></a>
+        </div>
+        <div class="price-card glass-d track" data-reveal>
+          <span class="tier">Full practice</span>
+          <div class="amount">One purchase</div>
+          <p class="under">On Gumroad. Yours after that.</p>
+          <ul class="tick">
+            <li>Everything in the personal practice</li>
+            <li>A file you own — keep it, back it up, use it offline forever</li>
+            <li>One payment. No renewals, no upsells</li>
+            <li>Directly supports an independent maker and future updates</li>
+          </ul>
+          <a class="btn btn-solid mag" href="https://bndrllc.gumroad.com/l/bemdr" target="_blank" rel="noopener noreferrer"><span class="mag-in">Unlock on Gumroad ↗</span></a>
+        </div>
+      </div>
+      <p class="price-note" data-reveal>Not sure yet? Start free. The practice space opens instantly, and the unlock will still be here when you’re ready.</p>
+    </section>
+  </div>
+</main>
 
-            init() {
-                this.gfx.canvas = document.getElementById('render-engine');
-                if (!this.gfx.canvas) return;
-                
-                this.gfx.ctx = this.gfx.canvas.getContext('2d', { alpha: true });
-                if (!this.gfx.ctx) return;
-                
-                window.addEventListener('resize', () => this.resize());
-                this.resize();
-                this.bindUI();
-                
-                const btnHud = document.getElementById('btn-audio-hud');
-                if (this.sys.audioEnabled) {
-                    document.getElementById('icon-audio-off').classList.add('hidden');
-                    document.getElementById('icon-audio-on').classList.remove('hidden');
-                    if (btnHud) {
-                        btnHud.classList.remove('opacity-50', 'text-white');
-                        btnHud.style.color = this.params.color;
-                        btnHud.style.filter = `drop-shadow(0 0 8px ${this.params.color})`;
-                        btnHud.style.transform = 'scale(1.1)';
-                    }
-                } else {
-                    document.getElementById('icon-audio-off').classList.remove('hidden');
-                    document.getElementById('icon-audio-on').classList.add('hidden');
-                    if (btnHud) {
-                        btnHud.classList.add('opacity-50', 'text-white');
-                    }
-                }
-            },
+<!-- ============ 05 FAQ ============ -->
+<main class="page" data-route="faq">
+  <div class="wrap">
+    <section class="band" style="padding-top:calc(64px + 9vh)">
+      <p class="kicker blend" data-reveal style="text-align:center">Questions, answered straight</p>
+      <h1 class="k-head blend" style="margin-top:18px;text-align:center">FAQ</h1>
+      <div class="faq">
+        <div class="qa" data-reveal>
+          <button class="qa-q" aria-expanded="false"><span>Do I need to install anything?</span><span class="qa-i"></span></button>
+          <div class="qa-b"><div class="qa-in"><p>No. BMDR is a single page that runs in any modern browser — open it and you’re in. On a phone you can add it to your home screen and it behaves like an app. Once it has loaded, it doesn’t need a connection.</p></div></div>
+        </div>
+        <div class="qa" data-reveal>
+          <button class="qa-q" aria-expanded="false"><span>Why does it pause when I switch tabs?</span><span class="qa-i"></span></button>
+          <div class="qa-b"><div class="qa-in"><p>On purpose. Bilateral stimulation only does its job while you’re actually following the anchor, so the moment the tab is hidden the session stops. When you come back, you resume with one tap — no lost settings.</p></div></div>
+        </div>
+        <div class="qa" data-reveal>
+          <button class="qa-q" aria-expanded="false"><span>What exactly am I hearing?</span><span class="qa-i"></span></button>
+          <div class="qa-b"><div class="qa-in"><p>A low tone built around an 87 Hz core: a triangle wave at 43.5 Hz underneath and a soft sine at 174 Hz above it. As the light travels, the loudness shifts between your left and right ear. A gentle compressor keeps the level even, and it fades in over 1.5 seconds.</p></div></div>
+        </div>
+        <div class="qa" data-reveal>
+          <button class="qa-q" aria-expanded="false"><span>Do I need headphones?</span><span class="qa-i"></span></button>
+          <div class="qa-b"><div class="qa-in"><p>They help. The left-right movement of the tone is the point, and headphones make it unmistakable. Speakers work too, and the audio is entirely optional — plenty of people practice with the light alone.</p></div></div>
+        </div>
+        <div class="qa" data-reveal>
+          <button class="qa-q" aria-expanded="false"><span>Is this EMDR therapy?</span><span class="qa-i"></span></button>
+          <div class="qa-b"><div class="qa-in"><p>No. EMDR is a structured psychotherapy done with a trained clinician. BMDR borrows one ingredient — the steady left-right rhythm — for self-guided settling and focus. It isn’t treatment, and it isn’t a substitute for working with a professional on difficult material.</p></div></div>
+        </div>
+        <div class="qa" data-reveal>
+          <button class="qa-q" aria-expanded="false"><span>What do the two flow patterns do?</span><span class="qa-i"></span></button>
+          <div class="qa-b"><div class="qa-in"><p>Gentle Sway moves the anchor along a straight, even line — the classic side-to-side. Infinite Flow traces a slow figure-eight, which some people find easier to follow for longer sessions because it never feels repetitive.</p></div></div>
+        </div>
+        <div class="qa" data-reveal>
+          <button class="qa-q" aria-expanded="false"><span>What happens to my data?</span><span class="qa-i"></span></button>
+          <div class="qa-b"><div class="qa-in"><p>Nothing, because there isn’t any. No account, no analytics, no tracking pixels. Your session runs on your device and ends there. There is nothing to delete because nothing was kept.</p></div></div>
+        </div>
+        <div class="qa" data-reveal>
+          <button class="qa-q" aria-expanded="false"><span>Can I change settings mid-session?</span><span class="qa-i"></span></button>
+          <div class="qa-b"><div class="qa-in"><p>Yes. The adjustment sheet slides up over the session at any time — pace, size, color, pattern, and audio all apply the moment you touch them. Escape or the close button puts it away without breaking your rhythm.</p></div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
 
-            bindUI() {
-                document.getElementById('param-hz').addEventListener('input', (e) => {
-                    this.params.hz = parseFloat(e.target.value);
-                    document.getElementById('label-hz').innerText = this.params.hz.toFixed(1);
-                    
-                    if (this.sys.syncRates) {
-                        this.params.audioHz = this.params.hz;
-                        document.getElementById('param-audio-hz').value = this.params.hz;
-                        document.getElementById('label-audio-hz').innerText = this.params.hz.toFixed(1);
-                    }
-                });
-                
-                document.getElementById('param-audio-hz').addEventListener('input', (e) => {
-                    if (this.sys.syncRates) {
-                        this.toggleSync(false); 
-                    }
-                    this.params.audioHz = parseFloat(e.target.value);
-                    document.getElementById('label-audio-hz').innerText = this.params.audioHz.toFixed(1);
-                });
+<!-- ============ 06 APP ============ -->
+<main class="page" data-route="app">
+  <div id="app-shell">
+    <iframe id="app-frame" title="BMDR practice space" allow="autoplay"></iframe>
+  </div>
+</main>
 
-                document.getElementById('param-mass').addEventListener('input', (e) => {
-                    this.params.mass = parseInt(e.target.value);
-                    document.getElementById('label-mass').innerText = this.params.mass;
-                });
-            },
+<div class="wrap" style="padding:0 clamp(20px,4.5vw,64px)" id="foot-wrap">
+<footer>
+  <span>BMDR · Mindful reprocessing</span>
+  <span>
+    <a href="https://bndrllc.com" target="_blank" rel="noopener noreferrer">BNDR LLC</a>
+    &nbsp;·&nbsp;
+    <a href="https://bndrllc.gumroad.com/l/bemdr" target="_blank" rel="noopener noreferrer">Gumroad</a>
+  </span>
+  <span>© 2026 BNDR LLC</span>
+</footer>
+</div>
 
-            toggleSync(force) {
-                this.sys.syncRates = force !== undefined ? force : !this.sys.syncRates;
-                
-                const track = document.getElementById('btn-sync-toggle');
-                const knob = document.getElementById('sync-knob');
-                const audioBlock = document.getElementById('audio-rhythm-control');
-                
-                if (this.sys.syncRates) {
-                    track.classList.replace('bg-white/20', 'bg-[var(--accent-glow)]');
-                    track.classList.add('shadow-[0_0_10px_rgba(0,255,204,0.3)]');
-                    knob.classList.add('translate-x-[22px]', 'bg-black');
-                    knob.classList.remove('bg-white', 'translate-x-[26px]'); 
-                    
-                    audioBlock.classList.replace('opacity-100', 'opacity-30');
-                    this.params.audioHz = this.params.hz;
-                    document.getElementById('param-audio-hz').value = this.params.hz;
-                    document.getElementById('label-audio-hz').innerText = this.params.hz.toFixed(1);
-                    
-                    this.params.audioTime = this.params.time;
-                } else {
-                    track.classList.replace('bg-[var(--accent-glow)]', 'bg-white/20');
-                    track.classList.remove('shadow-[0_0_10px_rgba(0,255,204,0.3)]');
-                    knob.classList.remove('translate-x-[22px]', 'translate-x-[26px]', 'bg-black');
-                    knob.classList.add('bg-white');
-                    
-                    audioBlock.classList.replace('opacity-30', 'opacity-100');
-                }
-            },
-
-            resize() {
-                this.gfx.w = window.innerWidth;
-                this.gfx.h = window.innerHeight;
-                const dpr = window.devicePixelRatio || 1;
-                this.gfx.canvas.width = this.gfx.w * dpr;
-                this.gfx.canvas.height = this.gfx.h * dpr;
-                this.gfx.ctx.scale(dpr, dpr);
-                if (!this.sys.active) this.render();
-            },
-
-            mountWorkspace() {
-                document.getElementById('layer-landing').classList.replace('active-layer', 'hidden-layer');
-                document.getElementById('layer-workspace').classList.replace('hidden-layer', 'active-layer');
-                this.sys.mode = 'workspace';
-                
-                if (!this.sys.active) {
-                    this.toggleSystem(true);
-                } else {
-                    this.render(); 
-                }
-            },
-
-            unmountWorkspace() {
-                if (this.sys.active) this.toggleSystem(false);
-                document.getElementById('layer-workspace').classList.replace('active-layer', 'hidden-layer');
-                document.getElementById('layer-landing').classList.replace('hidden-layer', 'active-layer');
-                this.sys.mode = 'idle';
-            },
-
-            toggleSheet() {
-                this.sys.sheetOpen = !this.sys.sheetOpen;
-                const sheet = document.getElementById('settings-sheet');
-                if (this.sys.sheetOpen) {
-                    sheet.classList.replace('sheet-closed', 'sheet-open');
-                } else {
-                    sheet.classList.replace('sheet-open', 'sheet-closed');
-                }
-            },
-
-            setPath(type) {
-                this.params.path = type;
-                const l = document.getElementById('path-linear');
-                const i = document.getElementById('path-lissajous');
-                l.className = type === 'linear' 
-                    ? 'py-4 rounded-2xl bg-white text-black font-edge text-[10px] font-bold uppercase transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95' 
-                    : 'py-4 rounded-2xl bg-white/10 text-white font-edge text-[10px] font-bold uppercase transition-all hover:bg-white/20 active:scale-95';
-                i.className = type === 'lissajous' 
-                    ? 'py-4 rounded-2xl bg-white text-black font-edge text-[10px] font-bold uppercase transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95' 
-                    : 'py-4 rounded-2xl bg-white/10 text-white font-edge text-[10px] font-bold uppercase transition-all hover:bg-white/20 active:scale-95';
-                if (!this.sys.active) this.render();
-            },
-
-            setColor(hex) {
-                this.params.color = hex;
-                const btns = document.querySelectorAll('#settings-sheet button[onclick^="Engine.setColor"]');
-                btns.forEach(b => {
-                    if(b.getAttribute('onclick').includes(hex)) {
-                        b.classList.add('border-black', `shadow-[0_0_20px_${hex}]`);
-                        b.classList.remove('border-transparent', 'opacity-50');
-                    } else {
-                        b.classList.remove('border-black', 'shadow-[0_0_20px_#00ffcc]', 'shadow-[0_0_20px_#ff0055]', 'shadow-[0_0_20px_#7000ff]', 'shadow-[0_0_20px_#ffffff]');
-                        b.classList.add('border-transparent', 'opacity-50');
-                    }
-                });
-                
-                if (this.sys.active) {
-                    const statusText = document.getElementById('status-text');
-                    statusText.style.color = this.params.color;
-                    statusText.style.textShadow = `0 0 10px ${this.params.color}`;
-                }
-                
-                // Keep HUD audio button color synchronized if audio is enabled
-                if (this.sys.audioEnabled) {
-                    const btnHud = document.getElementById('btn-audio-hud');
-                    if (btnHud) {
-                        btnHud.style.color = hex;
-                        btnHud.style.filter = `drop-shadow(0 0 8px ${hex})`;
-                    }
-                }
-                
-                if (!this.sys.active) this.render();
-            },
-
-            toggleSystem(forceState) {
-                this.sys.active = forceState !== undefined ? forceState : !this.sys.active;
-                const iPlay = document.getElementById('icon-play');
-                const iPause = document.getElementById('icon-pause');
-                const btn = document.getElementById('btn-master-play');
-                const status = document.getElementById('status-text');
-
-                if (this.sys.active) {
-                    iPlay.classList.add('hidden');
-                    iPause.classList.remove('hidden');
-                    
-                    btn.classList.add('opacity-10'); 
-                    setTimeout(() => { if(this.sys.active) btn.classList.replace('opacity-10', 'opacity-0'); }, 1000); 
-                    
-                    status.innerText = "Flowing";
-                    status.classList.remove('animate-pulse', 'text-white');
-                    status.style.color = this.params.color;
-                    status.style.textShadow = `0 0 10px ${this.params.color}`;
-
-                    if (this.sys.audioEnabled) {
-                        this.igniteAudio();
-                    }
-
-                    this.lastTime = performance.now();
-                    this.loop();
-                } else {
-                    iPlay.classList.remove('hidden');
-                    iPause.classList.add('hidden');
-                    
-                    btn.classList.remove('opacity-0', 'opacity-10');
-                    
-                    status.innerText = "Stillness";
-                    status.classList.add('animate-pulse', 'text-white');
-                    status.style.color = '';
-                    status.style.textShadow = '';
-
-                    if (this.gfx.req) cancelAnimationFrame(this.gfx.req);
-                    
-                    if (this.audio.ready && this.audio.masterGain && this.audio.ctx) {
-                        try {
-                            this.audio.masterGain.gain.cancelScheduledValues(this.audio.ctx.currentTime);
-                            this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, this.audio.ctx.currentTime);
-                            this.audio.masterGain.gain.linearRampToValueAtTime(0, this.audio.ctx.currentTime + 0.3);
-                        } catch (e) {
-                            
-                        }
-                    }
-                }
-            },
-
-            toggleAudio() {
-                this.sys.audioEnabled = !this.sys.audioEnabled;
-                const iconOff = document.getElementById('icon-audio-off');
-                const iconOn = document.getElementById('icon-audio-on');
-                const btnHud = document.getElementById('btn-audio-hud');
-                
-                if (this.sys.audioEnabled) {
-                    iconOff.classList.add('hidden');
-                    iconOn.classList.remove('hidden');
-                    
-                    if (btnHud) {
-                        btnHud.classList.remove('opacity-50', 'text-white');
-                        btnHud.style.color = this.params.color;
-                        btnHud.style.filter = `drop-shadow(0 0 8px ${this.params.color})`;
-                        btnHud.style.transform = 'scale(1.1)';
-                    }
-                    
-                    if (this.sys.active) this.igniteAudio();
-                } else {
-                    iconOff.classList.remove('hidden');
-                    iconOn.classList.add('hidden');
-                    
-                    if (btnHud) {
-                        btnHud.classList.add('opacity-50', 'text-white');
-                        btnHud.style.color = '';
-                        btnHud.style.filter = '';
-                        btnHud.style.transform = 'scale(1)';
-                    }
-                    
-                    if (this.audio.ready && this.audio.masterGain && this.audio.ctx) {
-                        try {
-                            this.audio.masterGain.gain.cancelScheduledValues(this.audio.ctx.currentTime);
-                            this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, this.audio.ctx.currentTime);
-                            this.audio.masterGain.gain.linearRampToValueAtTime(0, this.audio.ctx.currentTime + 0.1);
-                        } catch (e) {
-                            
-                        }
-                    }
-                }
-            },
-
-            igniteAudio() {
-                if (!this.audio.ctx) {
-                    try {
-                        const ACtx = window.AudioContext || window.webkitAudioContext;
-                        if (!ACtx) throw new Error('AudioContext not supported');
-                        
-                        this.audio.ctx = new ACtx();
-                        
-                        this.audio.compressor = this.audio.ctx.createDynamicsCompressor();
-                        this.audio.compressor.threshold.value = -24;
-                        this.audio.compressor.knee.value = 10;
-                        this.audio.compressor.ratio.value = 12;
-                        this.audio.compressor.attack.value = 0.003;
-                        this.audio.compressor.release.value = 0.25;
-
-                        this.audio.masterGain = this.audio.ctx.createGain();
-                        this.audio.masterGain.gain.value = 0;
-
-                        this.audio.compressor.connect(this.audio.masterGain);
-                        this.audio.masterGain.connect(this.audio.ctx.destination);
-
-                        const coreMix = this.audio.ctx.createGain();
-                        coreMix.gain.value = 0.8;
-
-                        const sub = this.audio.ctx.createOscillator();
-                        sub.type = 'triangle'; 
-                        sub.frequency.value = this.audio.baseFreq / 2;
-                        sub.connect(coreMix);
-                        sub.start();
-
-                        const harm = this.audio.ctx.createOscillator();
-                        harm.type = 'sine';
-                        harm.frequency.value = this.audio.baseFreq * 2; 
-                        const harmGain = this.audio.ctx.createGain();
-                        harmGain.gain.value = 0.4;
-                        harm.connect(harmGain);
-                        harmGain.connect(coreMix);
-                        harm.start();
-
-                        this.audio.merger = this.audio.ctx.createChannelMerger(2);
-                        this.audio.gainL = this.audio.ctx.createGain();
-                        this.audio.gainR = this.audio.ctx.createGain();
-
-                        coreMix.connect(this.audio.gainL);
-                        coreMix.connect(this.audio.gainR);
-
-                        this.audio.gainL.connect(this.audio.merger, 0, 0);
-                        this.audio.gainR.connect(this.audio.merger, 0, 1);
-                        
-                        this.audio.merger.connect(this.audio.compressor);
-
-                        this.audio.ready = true;
-                    } catch (e) {
-                        this.sys.audioEnabled = false;
-                        this.audio.ready = false;
-                        
-                        const iconOff = document.getElementById('icon-audio-off');
-                        const iconOn = document.getElementById('icon-audio-on');
-                        const btnHud = document.getElementById('btn-audio-hud');
-                        
-                        if (iconOff && iconOn) {
-                            iconOff.classList.remove('hidden');
-                            iconOn.classList.add('hidden');
-                        }
-                        
-                        if (btnHud) {
-                            btnHud.classList.add('opacity-50', 'text-white');
-                            btnHud.style.color = '';
-                            btnHud.style.filter = '';
-                            btnHud.style.transform = 'scale(1)';
-                        }
-                        return;
-                    }
-                }
-
-                if (this.audio.ctx.state === 'suspended') {
-                    this.audio.ctx.resume();
-                }
-
-                try {
-                    this.audio.masterGain.gain.cancelScheduledValues(this.audio.ctx.currentTime);
-                    this.audio.masterGain.gain.setValueAtTime(this.audio.masterGain.gain.value, this.audio.ctx.currentTime);
-                    this.audio.masterGain.gain.linearRampToValueAtTime(1.0, this.audio.ctx.currentTime + 1.5);
-                } catch (e) {
-                    
-                }
-            },
-
-            modulateAudio() {
-                if (!this.audio.ready || !this.sys.audioEnabled || !this.audio.ctx) return;
-                
-                try {
-                    const now = this.audio.ctx.currentTime;
-                    
-                    let audioPanNorm = 0;
-                    if (this.sys.syncRates) {
-                        audioPanNorm = this.gfx.xNorm; 
-                    } else {
-                        audioPanNorm = Math.sin(this.params.audioTime);
-                    }
-                    
-                    const volL = Math.max(0, 0.5 - (audioPanNorm * 0.5));
-                    const volR = Math.max(0, 0.5 + (audioPanNorm * 0.5));
-
-                    this.audio.gainL.gain.setValueAtTime(volL, now);
-                    this.audio.gainR.gain.setValueAtTime(volR, now);
-                } catch (e) {
-                    
-                }
-            },
-
-            loop() {
-                if (!this.sys.active) return;
-                const now = performance.now();
-                const dt = (now - this.lastTime) / 1000;
-                this.lastTime = now;
-
-                this.params.time += dt * this.params.hz * Math.PI;
-                if (this.sys.syncRates) {
-                    this.params.audioTime = this.params.time; 
-                } else {
-                    this.params.audioTime += dt * this.params.audioHz * Math.PI;
-                }
-
-                this.render();
-                this.modulateAudio();
-
-                this.gfx.req = requestAnimationFrame(() => this.loop());
-            },
-
-            render() {
-                const { ctx, w, h } = this.gfx;
-                if (!ctx) return;
-                
-                ctx.clearRect(0, 0, w, h);
-
-                const cy = h / 2;
-                const r = this.params.mass;
-                const pad = r + 40;
-                const spanX = (w / 2) - pad;
-                
-                let x = w / 2;
-                let y = cy;
-
-                if (this.sys.active) {
-                    if (this.params.path === 'linear') {
-                        this.gfx.xNorm = Math.sin(this.params.time);
-                        x = (w / 2) + (spanX * this.gfx.xNorm);
-                    } else {
-                        this.gfx.xNorm = Math.sin(this.params.time);
-                        x = (w / 2) + (spanX * this.gfx.xNorm);
-                        y = cy + ((h/4 - pad) * Math.sin(this.params.time * 2));
-                    }
-                } else {
-                    this.gfx.xNorm = 0;
-                }
-
-                const isOnWhite = x < (w / 2);
-
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
-                
-                ctx.shadowColor = this.params.color;
-                ctx.shadowBlur = 60;
-                
-                if (isOnWhite) {
-                    ctx.fillStyle = '#000';
-                    ctx.fill();
-                    ctx.lineWidth = 6;
-                    ctx.strokeStyle = this.params.color;
-                    ctx.stroke();
-                } else {
-                    ctx.fillStyle = this.params.color;
-                    ctx.fill();
-                }
-
-                ctx.shadowBlur = 0;
-                ctx.beginPath();
-                ctx.arc(x, y, r * 0.3, 0, Math.PI*2);
-                ctx.fillStyle = '#fff';
-                ctx.fill();
-            }
-        };
-    </script>
+</div><!-- /view -->
+<script src="site.js"></script>
 </body>
 </html>
