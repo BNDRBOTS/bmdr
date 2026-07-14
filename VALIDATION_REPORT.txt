@@ -1,0 +1,75 @@
+BMDR VERSION 7 LOCKED OVERLAY — LOCAL VALIDATION
+Date: 2026-07-14
+
+JavaScript syntax files checked: 7
+Syntax result: PASS
+
+Node test result:
+TAP version 13
+# Subtest: signed access token verifies before expiration
+ok 1 - signed access token verifies before expiration
+  ---
+  duration_ms: 13.639241
+  type: 'test'
+  ...
+# Subtest: expired and tampered tokens fail closed
+ok 2 - expired and tampered tokens fail closed
+  ---
+  duration_ms: 3.925061
+  type: 'test'
+  ...
+# Subtest: purchase eligibility enforces email and negative states
+ok 3 - purchase eligibility enforces email and negative states
+  ---
+  duration_ms: 0.275098
+  type: 'test'
+  ...
+# Subtest: cookie parser returns only the requested cookie
+ok 4 - cookie parser returns only the requested cookie
+  ---
+  duration_ms: 0.140017
+  type: 'test'
+  ...
+# Subtest: Git blob SHA matches the canonical Git calculation
+ok 5 - Git blob SHA matches the canonical Git calculation
+  ---
+  duration_ms: 1.233889
+  type: 'test'
+  ...
+# Subtest: replaceOnce rejects missing and ambiguous targets
+ok 6 - replaceOnce rejects missing and ambiguous targets
+  ---
+  duration_ms: 0.510617
+  type: 'test'
+  ...
+# Subtest: replaceBounded replaces exactly one bounded region
+ok 7 - replaceBounded replaces exactly one bounded region
+  ---
+  duration_ms: 0.225044
+  type: 'test'
+  ...
+# Subtest: exact Version 7 source lock passes
+ok 8 - exact Version 7 source lock passes # SKIP
+  ---
+  duration_ms: 0.577797
+  type: 'test'
+  ...
+# Subtest: Version 7 index patch is deterministic and complete
+ok 9 - Version 7 index patch is deterministic and complete # SKIP
+  ---
+  duration_ms: 0.108631
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 152.193704
+
+
+The two skipped tests require the six original Version 7 source files to be placed
+beside the overlay. They then verify the exact source hashes and patched build output.

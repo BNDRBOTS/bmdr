@@ -1,0 +1,15 @@
+{
+  "name": "bmdr-v7-locked-deployment",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Regression-locked purchase enforcement and legal overlay for the exact BMDR Version 7 source snapshot.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "verify": "node scripts/build.mjs --check",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs"
+  }
+}

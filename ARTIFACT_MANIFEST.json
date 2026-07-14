@@ -1,0 +1,39 @@
+{
+  "artifact": "BMDR Version 7 locked upload overlay",
+  "created": "2026-07-14",
+  "writes_to_github_performed_by_artifact_generation": false,
+  "source": {
+    "repository": "BNDRBOTS/bmdr",
+    "source_commit": "f5b0b8605b9a879e4dc4683218f33bd621aa467a",
+    "source_label": "Version 7 snapshot identified from the user-provided GitHub view",
+    "git_blob_sha1": {
+      "README.md": "2f0fa21cf35830111d404ce534acd93f3c2f59b1",
+      "app.html": "720768f8c3fb0ebbb212f4170a9e80e6de4c3995",
+      "bmdr.html": "720768f8c3fb0ebbb212f4170a9e80e6de4c3995",
+      "index.html": "84e5c45e43800468a0b30de1d90fcdd8e4c0fb7f",
+      "site.css": "d68c81482349f9ec4f224cf38db9762d056d8d1c",
+      "site.js": "40926e3d41fa11d5f85612e80846565609eda8fa"
+    }
+  },
+  "contents": [
+    ".env.example",
+    "SOURCE_LOCK.json",
+    "UPLOAD_INSTRUCTIONS.md",
+    "WRONG_MAIN_CHANGES.md",
+    "netlify.toml",
+    "netlify/functions/_shared/auth.mjs",
+    "netlify/functions/access.mjs",
+    "netlify/functions/protected-app.mjs",
+    "package.json",
+    "public-extra/access.html",
+    "public-extra/legal.css",
+    "public-extra/privacy.html",
+    "public-extra/refunds.html",
+    "public-extra/support.html",
+    "public-extra/terms.html",
+    "scripts/build.mjs",
+    "tests/auth.test.mjs",
+    "tests/build-helpers.test.mjs",
+    "tests/source-lock.test.mjs"
+  ]
+}
