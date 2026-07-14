@@ -1,0 +1,15 @@
+{
+  "name": "bmdr-v8",
+  "version": "8.0.0",
+  "private": true,
+  "type": "module",
+  "description": "BMDR website and protected bilateral-stimulation practice app.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/build.mjs && node --test tests/*.test.mjs",
+    "check": "npm test"
+  }
+}
