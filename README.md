@@ -1,746 +1,781 @@
 # BMDR
 
-A browser-based mindful reprocessing interface combining bilateral visual movement, optional stereo audio movement, adjustable pacing, and a mobile-first session workspace.
+BMDR is a mobile-first browser application for self-guided bilateral stimulation. It combines a moving visual anchor, optional left-right audio movement, adjustable pacing, selectable flow patterns, and a focused full-screen practice environment.
 
-BMDR is implemented as a self-contained static web application. The complete application currently lives in one `index.html` file and runs entirely in the browser without a backend, build system, database, account system, or package installation.
+The current Version 7 deployment includes:
 
-> **Implementation note:** The page title and primary interface use **BMDR**. The footer and current Gumroad product slug use **BEMDR**.
+- The original BMDR marketing site and practice application
+- Server-side Gumroad purchase verification
+- Protected access to the BMDR application
+- Signed, expiring browser sessions
+- Terms, privacy, refund, support, and purchase-recovery pages
+- Regression locking against the exact Version 7 source snapshot
+- Netlify deployment configuration and automated validation
 
----
-
-## Overview
-
-BMDR presents a focused visual and audio session environment built around a moving circular visual anchor.
-
-The application includes:
-
-* A landing screen with BNDR LLC branding
-* A Gumroad purchase link
-* Direct entry into the personal-practice workspace
-* A full-screen animated visual anchor
-* Linear and figure-eight-style movement patterns
-* Adjustable visual pacing
-* Adjustable visual-anchor size
-* Optional synthesized stereo audio
-* Linked or independently adjustable visual and audio rhythms
-* Four visual color options
-* Play, pause, audio, exit, and settings controls
-* A mobile-oriented bottom-sheet settings interface
-
-All animation, interaction, sound generation, and state management are handled by an inline JavaScript `Engine` object.
+BMDR is created and maintained by **BNDR LLC**.
 
 ---
 
-## Current Repository Structure
+## Product Scope
 
-```text
-bmdr/
-├── index.html
-└── README.md
-```
+BMDR is a self-guided wellness practice tool.
 
-### `index.html`
+It is not:
 
-Contains the entire application:
+- EMDR therapy
+- Psychotherapy
+- Medical treatment
+- A medical device
+- Crisis care
+- A replacement for a licensed clinician
 
-* Document structure
-* Landing interface
-* Workspace interface
-* Settings interface
-* CSS and visual styling
-* Canvas rendering
-* Application state
-* Event handling
-* Web Audio synthesis
-* Gumroad integration link
-
-### `README.md`
-
-Project documentation.
+The application borrows the steady left-right rhythm used in bilateral stimulation and provides a private, browser-based practice space.
 
 ---
 
-## Technology
-
-BMDR uses browser-native functionality and externally hosted frontend dependencies.
-
-### Core browser APIs
-
-* HTML5
-* CSS
-* JavaScript
-* Canvas 2D
-* Web Audio API
-* `requestAnimationFrame`
-* Device-pixel-ratio-aware rendering
-
-### External dependencies
-
-Loaded directly from CDNs:
-
-* [Tailwind CSS](https://cdn.tailwindcss.com)
-* [Lucide](https://unpkg.com/lucide@latest)
-* [Gumroad JavaScript](https://js.gumroad.com/2.0/js/gumroad.js)
-* Google Fonts
-
-  * Syncopate
-  * Inter
-
-The BNDR LLC logo is also loaded from an externally hosted Railway asset URL.
-
-There is no `package.json`, dependency installation step, bundler, framework, compiled output, or lockfile.
-
----
-
-## Application Flow
-
-### 1. Landing screen
-
-The initial screen displays:
-
-* BMDR branding
-* A BNDR LLC logo linking to `http://bndrllc.com`
-* “Mindful Integration” messaging
-* An **Unlock Full Practice** Gumroad button
-* A **Begin Personal Practice** button
-
-The Gumroad button currently links to:
-
-```text
-https://bndrllc.gumroad.com/l/bemdr
-```
-
-The **Begin Personal Practice** button directly opens the workspace.
-
-### Current commerce behavior
-
-The repository does not currently contain:
-
-* Gumroad license verification
-* Purchase-state verification
-* User authentication
-* Account creation
-* Session-based entitlement checks
-* Server-side payment validation
-* Protected application routes
-* A locked premium feature layer
-
-The Gumroad control is a purchase link. Access to the workspace is not technically conditioned on a completed purchase.
-
----
-
-## Session Workspace
-
-Opening the workspace automatically starts the visual movement.
-
-The workspace contains:
-
-* A full-screen Canvas rendering layer
-* A central play/pause control
-* A session-status indicator
-* An audio enable/disable control
-* A workspace exit control
-* A session-adjustments button
-* A full-screen tap target for play and pause
-
-### Session states
-
-The status indicator uses two visible states:
-
-* **Flowing** — movement is active
-* **Stillness** — movement is paused
-
-When active, the central play/pause control fades to reduce visual obstruction. Tapping the session area restores control by toggling the session state.
-
-Leaving the workspace pauses the animation and returns to the landing screen.
-
----
-
-## Visual Rendering
-
-The visual anchor is drawn through an HTML Canvas element.
-
-### Background
-
-The application uses a fixed diagonal split background:
-
-* Light gray on the left
-* Black on the right
-
-### Visual anchor
-
-The moving anchor is a circular form with:
-
-* A configurable radius
-* A configurable glow color
-* A white inner circle
-* Different rendering behavior over each background half
-
-When the anchor is on the light half:
-
-* Its main fill is black
-* Its selected color is used as a border and glow
-
-When the anchor is on the dark half:
-
-* Its main fill uses the selected color
-* The selected color also supplies the glow
-
-### High-density display handling
-
-The Canvas dimensions are multiplied by `window.devicePixelRatio` and then scaled back into CSS-space coordinates to improve rendering on high-density screens.
-
-The Canvas is recalculated when the browser viewport changes size.
-
----
-
-## Movement Patterns
-
-BMDR currently provides two movement modes.
-
-### Gentle Sway
-
-Internal value:
-
-```text
-linear
-```
-
-The anchor moves horizontally from side to side across the viewport.
-
-Its horizontal position is calculated from a sine wave.
-
-### Infinite Flow
-
-Internal value:
-
-```text
-lissajous
-```
-
-The anchor combines:
-
-* Horizontal sine movement
-* Vertical sine movement at twice the horizontal phase rate
-
-This creates a continuous figure-eight-style path.
-
----
-
-## Session Adjustments
-
-The settings interface opens as a mobile-oriented bottom sheet using dynamic viewport height.
-
-### Visual Pace
-
-Default:
-
-```text
-1.2
-```
-
-Range:
-
-```text
-0.2–3.0
-```
-
-Increment:
-
-```text
-0.1
-```
-
-This value controls progression through the visual movement calculation.
-
-### Audio Pace
-
-Default:
-
-```text
-1.2
-```
-
-Range:
-
-```text
-0.2–3.0
-```
-
-Increment:
-
-```text
-0.1
-```
-
-The audio-pace control becomes visually active when visual and audio rhythms are unlinked.
-
-Changing the audio-pace slider while rhythms are linked automatically attempts to disable synchronization before applying the independent value.
-
-### Link Rhythms
-
-Enabled by default.
-
-When enabled:
-
-* Audio movement follows the visual anchor’s horizontal position
-* Audio pace is set to the visual pace
-* Audio phase is aligned with visual phase
-* The independent audio control is visually reduced
-
-When disabled:
-
-* Audio pacing advances independently
-* The audio-pace slider becomes visually active
-* Stereo movement follows its own sine calculation
-
-### Visual Anchor Size
-
-Default:
-
-```text
-60
-```
-
-Range:
-
-```text
-20–150
-```
-
-Increment:
-
-```text
-5
-```
-
-This value is used as the rendered anchor radius.
-
-### Color palette
-
-Available values:
-
-```text
-#00ffcc
-#ff0055
-#7000ff
-#ffffff
-```
-
-The selected color affects:
-
-* Anchor fill or border
-* Anchor glow
-* Active status text
-* Active audio-control glow
-
-The default color is:
-
-```text
-#00ffcc
-```
+## Core Experience
+
+The BMDR practice space includes:
+
+- Full-screen visual bilateral movement
+- Adjustable pace from `0.2` to `3.0`
+- Adjustable anchor size from `20` to `150` pixels
+- Two movement patterns:
+  - Gentle Sway
+  - Infinite Flow
+- Four visual palettes:
+  - `#00FFCC`
+  - `#FF0055`
+  - `#7000FF`
+  - `#FFFFFF`
+- Optional bilateral audio
+- Linked or independent visual and audio pacing
+- Play and pause controls
+- Mobile-first settings sheet
+- Automatic pause when the page is hidden
+- Screen-reader labels and status announcements
+- Reduced-motion support
+- Safe-area support for modern mobile devices
 
 ---
 
 ## Audio System
 
-Audio is disabled by default and must be enabled through the workspace audio control.
+BMDR generates audio locally through the Web Audio API.
 
-BMDR generates audio locally through the Web Audio API. It does not load an audio recording or stream audio from a server.
+The current audio design uses:
 
-### Audio graph
+- Triangle oscillator at `43.5 Hz`
+- Reference core at `87 Hz`
+- Sine harmonic at `174 Hz`
+- Left and right gain channels
+- Stereo movement synchronized to the visual anchor
+- Optional independent audio pacing
+- Dynamics compression
+- Gradual fade-in and fade-out behavior
 
-The current audio system creates:
+Audio is optional. Browser autoplay rules require direct user interaction before audio can begin.
 
-* A triangle-wave sub oscillator
-* A sine-wave harmonic oscillator
-* A harmonic gain stage
-* A core mix gain
-* Separate left and right gain nodes
-* A two-channel merger
-* A dynamics compressor
-* A master output gain
-
-### Frequencies
-
-Internal base frequency:
-
-```text
-87 Hz
-```
-
-Generated oscillator frequencies:
-
-```text
-Triangle oscillator: 43.5 Hz
-Sine oscillator: 174 Hz
-```
-
-### Stereo movement
-
-The source audio is routed through independent left and right gain nodes.
-
-The gain balance moves between channels according to either:
-
-* The current horizontal visual-anchor position, when synchronization is enabled
-* An independent audio sine value, when synchronization is disabled
-
-At the movement extremes, the calculation can place the signal fully into one channel and remove it from the other.
-
-### Output behavior
-
-When enabled during an active session:
-
-* The audio context is created if necessary
-* The context is resumed if suspended
-* Master volume ramps upward over approximately 1.5 seconds
-
-When the session is paused:
-
-* Master volume ramps downward over approximately 0.3 seconds
-
-When audio is disabled:
-
-* Master volume ramps downward over approximately 0.1 seconds
-
-### Dynamics processing
-
-The compressor is configured with:
-
-```text
-Threshold: -24 dB
-Knee: 10
-Ratio: 12:1
-Attack: 0.003 seconds
-Release: 0.25 seconds
-```
-
-If Web Audio initialization fails, the application disables audio and restores the muted audio-control state.
+Headphones provide the clearest left-right movement.
 
 ---
 
-## State Management
+## Repository Structure
 
-Application state exists only in browser memory.
-
-The primary state groups are:
-
-### System state
-
-```javascript
-{
-  active: false,
-  sheetOpen: false,
-  audioEnabled: false,
-  syncRates: true,
-  mode: "idle"
-}
+```text
+.
+├── README.md
+├── app.html
+├── bmdr.html
+├── index.html
+├── site.css
+├── site.js
+├── package.json
+├── netlify.toml
+├── SOURCE_LOCK.json
+├── UPLOAD_INSTRUCTIONS.md
+├── WRONG_MAIN_CHANGES.md
+├── .env.example
+├── public-extra/
+│   ├── access.html
+│   ├── legal.css
+│   ├── privacy.html
+│   ├── refunds.html
+│   ├── support.html
+│   └── terms.html
+├── scripts/
+│   └── build.mjs
+├── tests/
+│   ├── auth.test.mjs
+│   ├── build-helpers.test.mjs
+│   └── source-lock.test.mjs
+└── netlify/
+    └── functions/
+        ├── access.mjs
+        ├── protected-app.mjs
+        ├── _private/
+        │   └── app.html
+        └── _shared/
+            └── auth.mjs
 ```
-
-### Session parameters
-
-```javascript
-{
-  hz: 1.2,
-  audioHz: 1.2,
-  mass: 60,
-  path: "linear",
-  color: "#00ffcc",
-  time: 0,
-  audioTime: 0
-}
-```
-
-### Graphics state
-
-Tracks:
-
-* Canvas
-* Rendering context
-* Viewport dimensions
-* Animation-frame request
-* Normalized horizontal position
-
-### Audio state
-
-Tracks:
-
-* Audio context
-* Master gain
-* Compressor
-* Channel merger
-* Left and right gain nodes
-* Base frequency
-* Initialization status
-
-Settings are not written to:
-
-* `localStorage`
-* `sessionStorage`
-* Cookies
-* A database
-* A remote API
-
-Reloading the page resets the application to its source defaults.
 
 ---
 
-## Running Locally
+## Application Files
 
-No installation or build is required.
+### `index.html`
 
-### Option 1: Open the file directly
+The BMDR marketing site.
 
-Open `index.html` in a modern browser.
+It includes:
 
-External network access is still required for the CDN scripts, fonts, Gumroad integration, and hosted logo.
+- Product overview
+- Method explanation
+- Feature demonstrations
+- Pricing and purchase flow
+- FAQ
+- Embedded application route
+- Terms, privacy, refunds, and support links
 
-### Option 2: Run a local static server
+The build process creates the deployable copy of this file and applies deterministic Version 7 changes without rewriting the original source file.
 
-From the repository directory:
+### `app.html`
+
+The primary BMDR practice application.
+
+This file contains:
+
+- Application layout
+- Visual rendering engine
+- Audio engine
+- Practice controls
+- Accessibility behavior
+- Responsive styles
+- Mobile safe-area handling
+
+The deployed static site does not publish this file directly.
+
+During the build, the verified Version 7 application is copied into the private Netlify function bundle and served only after successful purchase verification.
+
+### `bmdr.html`
+
+Version 7 contains the same application source as `app.html`.
+
+The deployed `/bmdr.html` route is protected by the same authorization system as `/app.html`.
+
+### `site.css`
+
+Contains the BMDR marketing-site design system, responsive layout, navigation, feature demonstrations, pricing, FAQ, and application-shell styling.
+
+### `site.js`
+
+Contains the marketing-site runtime:
+
+- Hash routing
+- Scroll behavior
+- Reveal animations
+- Magnetic interactions
+- Card glow tracking
+- FAQ accordion
+- Feature demonstrations
+- Hero Canvas animation
+- Application iframe mounting
+- Reduced-motion handling
+
+---
+
+## Purchase Enforcement
+
+BMDR browser access is protected through server-side Gumroad verification.
+
+### Verification flow
+
+1. The purchaser opens `/access.html`.
+2. The purchaser enters:
+   - The email used for purchase
+   - The Gumroad license key
+3. The browser sends those values to `/api/access`.
+4. The Netlify function verifies the license with Gumroad.
+5. The submitted email must match the purchase email.
+6. The purchase must remain eligible.
+7. A signed, expiring `HttpOnly` cookie is issued.
+8. The purchaser is redirected to the protected BMDR application.
+
+### Rejected purchase states
+
+Access is rejected when the Gumroad purchase is marked as:
+
+- Refunded
+- Disputed
+- Chargebacked
+- License disabled
+- Subscription ended
+
+### Session cookie
+
+Successful verification creates:
+
+```text
+bmdr_access
+```
+
+The cookie is:
+
+- Signed with HMAC-SHA256
+- `HttpOnly`
+- `SameSite=Strict`
+- `Secure` on HTTPS
+- Expiring
+- Limited to the BMDR site
+- Free of the purchase email and license key
+
+The default session duration is seven days.
+
+The maximum configured duration is thirty days.
+
+### Protected application delivery
+
+The public static deployment does not include:
+
+```text
+dist/app.html
+dist/bmdr.html
+```
+
+The protected Netlify function serves the application source only after validating the signed access cookie.
+
+Unauthorized requests are redirected to:
+
+```text
+/access.html
+```
+
+---
+
+## Security Controls
+
+The deployment includes:
+
+- Server-side Gumroad verification
+- Signed authorization sessions
+- Constant-time signature comparison
+- Expiration validation
+- Same-origin request enforcement
+- Request-size limits
+- Verification-attempt throttling
+- Gumroad request timeout
+- No-store responses for access endpoints
+- No-store responses for protected application HTML
+- Security headers
+- Content Security Policy
+- Frame restrictions
+- Referrer policy
+- Permission restrictions
+- No license keys in page URLs
+- No license keys in browser storage
+- No purchase email or license-key logging in application code
+- Fail-closed behavior when required secrets are absent
+
+Client-side hiding is not used as purchase enforcement.
+
+---
+
+## Privacy
+
+BMDR session activity runs locally in the browser.
+
+The application does not upload:
+
+- Visual pace
+- Audio pace
+- Selected color
+- Selected movement pattern
+- Session duration
+- Session content
+- Personal reflections
+- Clinical information
+
+Purchase verification sends the following to the BMDR verification endpoint and Gumroad:
+
+- Purchase email
+- Gumroad license key
+
+After verification, the browser stores only the signed access cookie.
+
+The deployment adds no:
+
+- Analytics
+- Advertising pixels
+- Behavioral tracking
+- User profiles
+- Session recording
+- Data brokerage
+
+Standard infrastructure logs may still be created by Netlify, Gumroad, Railway, Google Fonts, or other hosting providers according to their own systems and policies.
+
+See:
+
+```text
+/privacy.html
+```
+
+---
+
+## Legal and Support Pages
+
+The deployment includes:
+
+### Terms
+
+```text
+/terms.html
+```
+
+Covers:
+
+- Personal-use license
+- Purchase verification
+- Safe use
+- No clinical relationship
+- Intellectual property
+- Availability
+- Disclaimers
+- Liability limits
+
+### Privacy
+
+```text
+/privacy.html
+```
+
+Covers:
+
+- Local session activity
+- Purchase verification data
+- Access cookie
+- Hosting logs
+- External services
+- Analytics and advertising
+- Retention and requests
+
+### Refunds
+
+```text
+/refunds.html
+```
+
+Covers:
+
+- Digital-product purchase policy
+- Duplicate or incorrect charges
+- Material technical failure
+- Required request information
+- Access removal after refund or dispute
+- Mandatory consumer rights
+
+### Support
+
+```text
+/support.html
+```
+
+Covers:
+
+- Purchase recovery
+- License-key errors
+- Audio behavior
+- Browser compatibility
+- Sign-out and reset
+- Contact guidance
+
+### Access Recovery
+
+```text
+/access.html
+```
+
+Allows existing purchasers to:
+
+- Verify access
+- Re-enter purchase credentials
+- Open the protected application
+- Clear the current device session
+- Reach purchase, legal, and support pages
+
+---
+
+## Version 7 Source Lock
+
+The deployment overlay is locked to the exact Version 7 source snapshot:
+
+```text
+Repository: BNDRBOTS/bmdr
+Commit: f5b0b8605b9a879e4dc4683218f33bd621aa467a
+```
+
+The build verifies the canonical Git blob SHA for:
+
+- `README.md`
+- `app.html`
+- `bmdr.html`
+- `index.html`
+- `site.css`
+- `site.js`
+
+The build fails before creating deploy output when:
+
+- A required Version 7 file is missing
+- A file was edited
+- Files came from different versions
+- The overlay was added to the wrong source snapshot
+- The expected patch target is missing
+- A patch target appears more than once
+- Protected application files leak into the public output
+
+This prevents the deployment overlay from silently applying to an unverified codebase.
+
+---
+
+## Build Process
+
+Requirements:
+
+```text
+Node.js 20 or newer
+```
+
+Install dependencies:
 
 ```bash
-python3 -m http.server 8080
+npm install
 ```
 
-Then open:
-
-```text
-http://localhost:8080
-```
-
-### Clone and run
+Verify the Version 7 source files:
 
 ```bash
-git clone https://github.com/BNDRBOTS/bmdr.git
-cd bmdr
-python3 -m http.server 8080
+npm run verify
+```
+
+Run automated tests:
+
+```bash
+npm test
+```
+
+Create the deployable output:
+
+```bash
+npm run build
+```
+
+The build performs these operations:
+
+1. Verifies all Version 7 source hashes.
+2. Deletes any previous `dist/` output.
+3. Copies `site.css` and `site.js`.
+4. Creates the deployable marketing-site `index.html`.
+5. Applies exact, assertion-checked pricing and privacy corrections.
+6. Adds terms, privacy, refunds, support, and access pages.
+7. Copies the original Version 7 application into the private function bundle.
+8. Refuses to publish `app.html` or `bmdr.html` statically.
+9. Creates `dist/build-manifest.json`.
+10. Stops immediately on any regression-lock failure.
+
+The original Version 7 application files remain unchanged.
+
+---
+
+## Environment Variables
+
+Create the following Netlify environment variables:
+
+```env
+BMDR_SESSION_SECRET=replace-with-a-random-secret-at-least-32-characters
+GUMROAD_PRODUCT_PERMALINK=bemdr
+GUMROAD_PRODUCT_URL=https://bndrllc.gumroad.com/l/bemdr
+BMDR_SESSION_TTL_HOURS=168
+```
+
+### `BMDR_SESSION_SECRET`
+
+Required.
+
+Used to sign and verify access-session cookies.
+
+Requirements:
+
+- At least 32 characters
+- Random
+- Private
+- Never committed to the repository
+
+### `GUMROAD_PRODUCT_PERMALINK`
+
+Current value:
+
+```text
+bemdr
+```
+
+This is the Gumroad product URL slug.
+
+The external Gumroad slug may remain `bemdr`; the visible product brand throughout the BMDR site remains **BMDR**.
+
+### `GUMROAD_PRODUCT_URL`
+
+Current purchase URL:
+
+```text
+https://bndrllc.gumroad.com/l/bemdr
+```
+
+### `BMDR_SESSION_TTL_HOURS`
+
+Default:
+
+```text
+168
+```
+
+Equivalent to seven days.
+
+Maximum:
+
+```text
+720
+```
+
+Equivalent to thirty days.
+
+---
+
+## Gumroad Configuration
+
+The Gumroad product must have license keys enabled.
+
+The purchaser must receive:
+
+- A purchase receipt
+- A license key
+- A purchase email associated with the license
+
+The access endpoint verifies using Gumroad's license-verification API.
+
+The purchase link is:
+
+```text
+https://bndrllc.gumroad.com/l/bemdr
 ```
 
 ---
 
-## Deployment
+## Netlify Deployment
 
-BMDR can be deployed as a static site.
-
-### Required deployment settings
+The included `netlify.toml` configures:
 
 ```text
-Build command: none
-Publish directory: repository root
-Entry file: index.html
+Build command: node scripts/build.mjs
+Publish directory: dist
+Functions directory: netlify/functions
 ```
 
-Compatible static-hosting approaches include:
+The protected application file is bundled through:
 
-* GitHub Pages
-* Netlify
-* Vercel
-* Cloudflare Pages
-* Railway static hosting
-* Traditional web hosting
-* Any server capable of serving static HTML
+```toml
+[functions]
+included_files = ["netlify/functions/_private/app.html"]
+```
 
-No provider-specific deployment configuration is currently included in the repository.
+Deploy from the Version 7 branch containing:
+
+- The six original Version 7 files
+- The additive enforcement and legal overlay
+- The required Netlify environment variables
+
+A deployment without a valid `BMDR_SESSION_SECRET` fails closed and does not grant application access.
+
+---
+
+## Testing
+
+The repository includes tests for:
+
+- Valid signed sessions
+- Expired sessions
+- Tampered sessions
+- Gumroad purchase eligibility
+- Refunded purchases
+- Disputed purchases
+- Chargebacked purchases
+- Disabled licenses
+- Purchase-email matching
+- Cookie parsing
+- Git blob hashing
+- Deterministic patch helpers
+- Missing patch targets
+- Ambiguous patch targets
+- Exact Version 7 source validation
+- Final build-output requirements
+
+Run:
+
+```bash
+npm test
+npm run verify
+npm run build
+```
+
+---
+
+## Mobile-First Behavior
+
+BMDR is designed for mobile use first.
+
+The application includes:
+
+- Responsive full-screen layout
+- Touch-sized controls
+- Dynamic viewport handling
+- iPhone safe-area support
+- Mobile bottom-sheet controls
+- Tap-to-pause behavior
+- Mobile browser status-bar metadata
+- Home-screen application metadata
+- Responsive desktop behavior
+
+The marketing site also includes mobile navigation and responsive content layouts.
+
+---
+
+## Accessibility
+
+Version 7 includes:
+
+- Semantic navigation
+- Skip link
+- Visible keyboard focus states
+- Labeled range controls
+- Screen-reader status output
+- Accessible FAQ controls
+- `aria-expanded` state
+- Reduced-motion support
+- Keyboard-accessible buttons and links
+- Sufficient touch target sizing
+- Automatic session pause when the page becomes hidden
 
 ---
 
 ## Browser Requirements
 
-A compatible browser should support:
+BMDR requires a modern browser supporting:
 
-* Canvas 2D
-* Web Audio API
-* CSS backdrop filters
-* CSS dynamic viewport units
-* JavaScript modules are not required
-* `requestAnimationFrame`
-* Pointer or touch interaction
+- JavaScript
+- Canvas 2D
+- Web Audio API
+- CSS custom properties
+- CSS backdrop filters
+- Cookies
+- `requestAnimationFrame`
+- Modern responsive CSS
 
-Because the application loads dependencies from external CDNs, offline execution is not currently supported.
+Expected browsers include current versions of:
 
-Browser autoplay restrictions may require direct user interaction before synthesized audio can begin.
+- Chrome
+- Safari
+- Firefox
+- Edge
 
----
-
-## Customization
-
-All configuration is contained in `index.html`.
-
-### Gumroad product
-
-Replace the Gumroad URL on the `gumroad-button` anchor:
-
-```html
-<a
-  class="gumroad-button"
-  href="https://bndrllc.gumroad.com/l/bemdr"
-  data-gumroad-single-item="true"
->
-```
-
-Changing this URL does not add purchase verification or application locking.
-
-### BNDR LLC link
-
-Update the header link:
-
-```html
-<a href="http://bndrllc.com">
-```
-
-### Logo asset
-
-Replace the externally hosted image URL in the header `<img>` element.
-
-### Landing content
-
-Edit:
-
-* BMDR heading
-* “Mindful Integration” heading
-* Supporting description
-* Purchase-button label
-* Personal-practice label
-* Footer text
-
-### Default session values
-
-Edit `Engine.params`:
-
-```javascript
-params: {
-  hz: 1.2,
-  audioHz: 1.2,
-  mass: 60,
-  path: "linear",
-  color: "#00ffcc",
-  time: 0,
-  audioTime: 0
-}
-```
-
-Matching slider defaults should also be updated in the HTML controls.
-
-### Audio frequency
-
-Edit:
-
-```javascript
-baseFreq: 87
-```
-
-The current oscillators derive their frequencies from this value.
-
-### Colors
-
-Update:
-
-* Color-control button values
-* The `--accent-glow` CSS variable
-* The default `Engine.params.color`
-* Any corresponding hardcoded Tailwind classes
+Private-browsing rules or blocked cookies may require purchase verification on each visit.
 
 ---
 
-## Network and Privacy Behavior
+## Offline Use
 
-The application does not currently implement:
+The purchased downloadable application file can operate locally after required assets are available.
 
-* User accounts
-* User-profile storage
-* Session recording
-* Uploaded data
-* Form submission
-* Analytics
-* Advertising trackers
-* Custom API requests
-* Backend communication
-* Database writes
+The protected hosted application requires a successful online Gumroad verification to establish browser access.
 
-The page does make normal browser requests to third-party services for:
-
-* Tailwind CSS
-* Lucide
-* Google Fonts
-* Gumroad JavaScript
-* The BNDR LLC logo asset
-
-Selecting the Gumroad button navigates into Gumroad’s purchase flow.
-
-Audio synthesis and animation occur locally in the browser.
+The current application references externally hosted Google Fonts and a BNDR LLC image. The application remains functional with fallback fonts when Google Fonts are unavailable, but complete visual parity may depend on those external resources.
 
 ---
 
-## Current Scope and Limitations
+## Public Repository Limitation
 
-The current source does not include:
+Purchase enforcement protects delivery from the deployed BMDR website.
 
-* A backend
-* Authentication
-* Authorization
-* Gumroad entitlement verification
-* License-key validation
-* Payment webhooks
-* Protected premium features
-* User accounts
-* Saved presets
-* Session history
-* Timers
-* Guided instructions
-* Clinician controls
-* Medical records
-* Progress tracking
-* Analytics
-* Offline support
-* A service worker
-* PWA metadata
-* Automated tests
-* Continuous integration
-* Linting configuration
-* Build validation
-* Error reporting
-* Deployment configuration
-* An open-source license
+It cannot make application source confidential when the source already exists in:
 
-The application is a static browser interface rather than a medical-device platform, clinical record system, or verified treatment-delivery system. The current source also does not display a medical disclaimer or emergency-use notice.
+- A public GitHub repository
+- Public Git history
+- Public branches
+- Previously distributed files
+
+Actual source confidentiality requires:
+
+- A private repository
+- A private deployment source
+- Removal of sensitive source from public history
+- Server-side functionality that is never shipped to the browser
+
+Minification, obfuscation, hidden buttons, and client-side checks are not equivalent to access enforcement.
 
 ---
 
-## Naming Consistency
+## Brand
 
-The current source contains multiple related names:
+The visible product name is:
 
-* Browser title: `BMDR | Mindful Reprocessing`
-* Main header: `BMDR`
-* Footer: `BEMDR`
-* Gumroad slug: `bemdr`
-* Earlier repository history used `B-EMDR`
+```text
+BMDR
+```
 
-This README uses **BMDR** as the primary project name because that is the name displayed in the current page title and main interface.
+Full title:
+
+```text
+BMDR | Mindful Reprocessing
+```
+
+Publisher:
+
+```text
+BNDR LLC
+```
+
+Website:
+
+```text
+https://bndrllc.com
+```
+
+Purchase page:
+
+```text
+https://bndrllc.gumroad.com/l/bemdr
+```
+
+The Gumroad URL slug does not change the visible BMDR product brand.
 
 ---
 
 ## License
 
-No `LICENSE` file is currently included.
+BMDR is proprietary software owned by BNDR LLC.
 
-The interface footer contains:
+A purchase grants personal-use rights under the BMDR Terms of Use.
+
+No open-source license is granted.
+
+See:
 
 ```text
-© 2026 BNDR LLC // BEMDR
+/terms.html
 ```
-
-Absent an explicit license, the repository does not grant open-source reuse, modification, or redistribution rights.
 
 ---
 
-## Ownership
-
-**BNDR LLC**
-
-Website:
+## Copyright
 
 ```text
-http://bndrllc.com
+© 2026 BNDR LLC. All rights reserved.
 ```
+⬇️
