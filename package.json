@@ -1,0 +1,13 @@
+{
+  "name": "bmdr",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check netlify/functions/access.js && node --check netlify/edge-functions/purchase-gate.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
