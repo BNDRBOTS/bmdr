@@ -1,6 +1,6 @@
-# BMDR
+# BMDR™
 
-BMDR is a static, mobile-first browser practice space for self-guided bilateral stimulation. It combines a moving visual anchor, optional left-right audio, adjustable visual and audio pacing, two movement paths, four palettes, and automatic pause when the page is hidden.
+BMDR™ is a static, mobile-first browser practice space for self-guided bilateral stimulation. It combines a moving visual anchor, optional left-right audio, adjustable visual and audio pacing, two movement paths, four palettes, and automatic pause when the page is hidden.
 
 ## Architecture
 
